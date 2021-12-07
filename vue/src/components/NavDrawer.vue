@@ -29,6 +29,7 @@ export default {
           to: "/login",
         },
         { title: "Admin Portal", icon: "mdi-shield-account", to: "/login" },
+        { title: "Add Property", icon: "mdi-home-group-plus", to: "/add-property"},
         { title: "Login", icon: "mdi-login", to: "/login" },
       ],
     };
@@ -36,7 +37,15 @@ export default {
   computed: {
     activeNavs() {
       return this.navs.filter((nav) => {
-        return !(nav.title === "Login" && this.$store.state.user.username);
+        if (nav.title === "Login" && this.$store.state.user.username) return false;
+        if (nav.title === "Add Property" && ! this.$store.state.user.username) {
+          return false;
+        } else if (nav.title === "Add Property" && this.$store.state.user.username) {
+          if (! (this.$store.state.user.authorities[0].name === "ROLE_ADMIN" || this.$store.state.user.authorities[0].name === "ROLE_LANDLORD")) {
+            return false;
+          }
+        }
+        return true;
       });
     },
   },
