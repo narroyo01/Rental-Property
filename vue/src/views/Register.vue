@@ -106,7 +106,9 @@ export default {
   },
   methods: {
     register() {
+      this.clearErrors();
       if (!this.$refs.form.validate()) return;
+      this.loading = true;
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = "Password & Confirm Password do not match.";
@@ -122,6 +124,7 @@ export default {
             }
           })
           .catch((error) => {
+            this.loading = false;
             const response = error.response;
             this.registrationErrors = true;
             if (response.status === 400) {
