@@ -114,6 +114,14 @@ CREATE TABLE maintenance_request (
         CONSTRAINT fk_technicianid FOREIGN KEY(technician_id) REFERENCES users(user_id),
         CONSTRAINT fk_requesterid FOREIGN KEY(requester_id) REFERENCES users(user_id)
 );
+
+INSERT INTO property (address, rent, is_available, tenant_id) VALUES ('1234 Jimmy St', 1200, true, /*tenant id??????serial*/);
+INSERT INTO property (address, rent, is_available) VALUES ('5678 John Dr', 2100, false);
+INSERT INTO property (address, rent, is_available, tenant_id) VALUES ('9012 Luke Boulevard', 1800, true, /*tenant id how??????*/);
+
+INSERT INTO inquiry (email, phone, message, property_id) VALUES ('someone@yahoo.com', '123-456-7890', 'I am intersted in renting this apartment', /*propertyid????????*/);
+
+INSERT INTO transactions (time_initiated, )
  
  
 COMMIT TRANSACTION;
