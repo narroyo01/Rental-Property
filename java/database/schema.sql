@@ -115,13 +115,19 @@ CREATE TABLE maintenance_request (
         CONSTRAINT fk_requesterid FOREIGN KEY(requester_id) REFERENCES users(user_id)
 );
 
-INSERT INTO property (address, rent, is_available, tenant_id) VALUES ('1234 Jimmy St', 1200, true, /*tenant id??????serial*/);
+INSERT INTO property (address, rent, is_available, tenant_id) VALUES ('1234 Jimmy St', 1200, true, 1);
 INSERT INTO property (address, rent, is_available) VALUES ('5678 John Dr', 2100, false);
-INSERT INTO property (address, rent, is_available, tenant_id) VALUES ('9012 Luke Boulevard', 1800, true, /*tenant id how??????*/);
+INSERT INTO property (address, rent, is_available, tenant_id) VALUES ('9012 Luke Boulevard', 1800, true, 2);
 
-INSERT INTO inquiry (email, phone, message, property_id) VALUES ('someone@yahoo.com', '123-456-7890', 'I am intersted in renting this apartment', /*propertyid????????*/);
+INSERT INTO inquiry (email, phone, message, property_id) VALUES ('someone@yahoo.com', '123-456-7890', 'I am intersted in renting this apartment', 1);
 
-INSERT INTO transactions (time_initiated, )
+INSERT INTO transactions (time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id)
+VALUES ('10/1/2021', '11/1/2021', 1200, 1200, 1, 1);
+
+INSERT INTO maintenance_type (description) VALUES ('Sink is leaking water');
+
+INSERT INTO maintenance_request (property_id, type_id, technician_id, requester_id, time_stamp, is_complete, email, phone, name)
+VALUES (1, 1, 2, 1, '12/8/2021', false, 'requester@gmail.com', '2345678901', 'John');
  
  
 COMMIT TRANSACTION;
