@@ -4,13 +4,13 @@
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <v-text-field
         :loading="loading"
-        :rules="rules"
+        :rules="rulesUsername"
         label="Username"
         v-model="user.username"
       ></v-text-field>
       <v-text-field
         :loading="loading"
-        :rules="rules"
+        :rules="rulesPassword"
         label="Password"
         v-model="user.password"
         type="password"
@@ -19,7 +19,7 @@
       <v-alert class="mt-6" type="error" v-if="invalidCredentials">
         Invalid username and password!
       </v-alert>
-      <v-alert type="success" v-if="this.$route.query.registration">
+      <v-alert class="mt-6" type="success" v-if="this.$route.query.registration">
         Thank you for registering, please sign in.
       </v-alert>
       <p class="mt-6">
@@ -81,10 +81,15 @@ export default {
       },
       invalidCredentials: false,
       loading: false,
-      rules: [
+      rulesUsername: [
         value => !!value || 'Required',
         value => (value || '').length <= 20 || 'Max 20 characters',
         value => (value || '').length > 2 || 'Min 3 characters',
+      ],
+      rulesPassword: [
+        value => !!value || 'Required',
+        value => (value || '').length <= 80 || 'Max 80 characters',
+        value => (value || '').length > 5 || 'Min 6 characters',
       ],
     };
   },
