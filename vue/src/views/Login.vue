@@ -1,14 +1,21 @@
 <template>
-  <v-form @submit.prevent="login">
+  <v-form ref="form" @submit.prevent="login">
     <v-container id="loginBox">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
-      <v-text-field label="Username" v-model="user.username"></v-text-field>
       <v-text-field
+        :loading="loading"
+        :rules="rules"
+        label="Username"
+        v-model="user.username"
+      ></v-text-field>
+      <v-text-field
+        :loading="loading"
+        :rules="rules"
         label="Password"
         v-model="user.password"
         type="password"
       ></v-text-field>
-      <v-btn elevation="2" color="primary" type="submit">Login</v-btn>
+      <v-btn class="mt-4" elevation="2" color="primary" type="submit">Login</v-btn>
       <v-alert class="mt-6" type="error" v-if="invalidCredentials">
         Invalid username and password!
       </v-alert>
@@ -73,10 +80,18 @@ export default {
         password: "",
       },
       invalidCredentials: false,
+      loading: false,
+      rules: [
+        value => !!value || 'Required',
+        value => (value || '').length <= 20 || 'Max 20 characters',
+        value => (value || '').length > 2 || 'Min 3 characters',
+      ],
     };
   },
   methods: {
     login() {
+      if (! this.$refs.form.validate()) return;
+      this.loading = true;
       authService
         .login(this.user)
         .then((response) => {
@@ -87,6 +102,7 @@ export default {
           }
         })
         .catch((error) => {
+          this.loading = false;
           const response = error.response;
 
           if (response.status === 401) {

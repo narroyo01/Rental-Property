@@ -3,15 +3,19 @@
     <v-app-bar-nav-icon @click="$emit('toggleDrawer')"></v-app-bar-nav-icon>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title
-          class="text-h6"
-          @click="navHome()"
-          style="display: inline-block; cursor: pointer"
-        >
-          Rental Property
+        <v-list-item-title class="text-h6">
+          <span
+            @click="navHome()"
+            style="display: inline-block; cursor: pointer"
+            >Rental Property</span
+          >
         </v-list-item-title>
         <v-list-item-subtitle @click="navHome()">
-          Manager
+          <span
+            @click="navHome()"
+            style="display: inline-block; cursor: pointer"
+            >Manager</span
+          >
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
