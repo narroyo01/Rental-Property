@@ -59,6 +59,7 @@ CREATE TABLE property (
         rent INT,
         is_available BOOLEAN,
         tenant_id INT,
+        image_url VARCHAR(500),
         
         CONSTRAINT pk_property PRIMARY KEY(property_id),
         CONSTRAINT fk_tenantid FOREIGN KEY(tenant_id) REFERENCES users(user_id)
@@ -107,6 +108,7 @@ CREATE TABLE maintenance_request (
         email VARCHAR(100),
         phone VARCHAR(20),
         name VARCHAR(20),
+        comments VARCHAR(1000),
         
         CONSTRAINT pk_maintenancerequest PRIMARY KEY(maintenance_request_id),
         CONSTRAINT fk_propertyid FOREIGN KEY(property_id) REFERENCES property(property_id),
@@ -124,7 +126,7 @@ INSERT INTO inquiry (email, phone, message, property_id) VALUES ('someone@yahoo.
 INSERT INTO transactions (time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id)
 VALUES ('10/1/2021', '11/1/2021', 1200, 1200, 1, 1);
 
-INSERT INTO maintenance_type (description) VALUES ('Sink is leaking water');
+INSERT INTO maintenance_type (description) VALUES ('Plumbing');
 
 INSERT INTO maintenance_request (property_id, type_id, technician_id, requester_id, time_stamp, is_complete, email, phone, name)
 VALUES (1, 1, 2, 1, '12/8/2021', false, 'requester@gmail.com', '2345678901', 'John');

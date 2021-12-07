@@ -21,6 +21,6 @@ public class PropertyController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public void add(@RequestBody Property property){
-        propertyDao.addProperty(property.getAddress(), property.getRent(), property.isAvailable(), property.getTenantId());
+        propertyDao.addProperty(property);
     }
 }

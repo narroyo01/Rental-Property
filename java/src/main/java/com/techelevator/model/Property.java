@@ -4,9 +4,9 @@ public class Property {
 
     private int propertyId;
     private String address;
-    private int rent;
-    private boolean isAvailable;
-    private int tenantId;
+    private Integer rent;
+    private Boolean isAvailable;
+    private Integer tenantId;
 
     public int getPropertyId() {
         return propertyId;
@@ -24,7 +24,7 @@ public class Property {
         this.address = address;
     }
 
-    public int getRent() {
+    public Integer getRent() {
         return rent;
     }
 
@@ -32,7 +32,7 @@ public class Property {
         this.rent = rent;
     }
 
-    public boolean isAvailable() {
+    public Boolean isAvailable() {
         return isAvailable;
     }
 
@@ -40,11 +40,11 @@ public class Property {
         isAvailable = available;
     }
 
-    public int getTenantId() {
+    public Integer getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(int tenantId) {
+    public void setTenantId(Integer tenantId) {
         this.tenantId = tenantId;
     }
 }
