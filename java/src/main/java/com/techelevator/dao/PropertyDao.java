@@ -8,6 +8,6 @@ public interface PropertyDao {
 
     int addProperty(Property property);
 
-
+    void updateProperty(int propertyId, Property property);
 
 }

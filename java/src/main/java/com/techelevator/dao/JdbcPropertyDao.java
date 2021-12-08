@@ -20,4 +20,12 @@ public class JdbcPropertyDao implements  PropertyDao{
                 "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
         return jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getRent(), true, null, property.getImageUrl());
     }
+
+    @Override
+    public void updateProperty(int propertyId, Property property) {
+        String sql = "UPDATE property" +
+                " SET address = ?, rent = ?, is_available = ?, tenant_id = ?, image_url = ?" +
+                " WHERE property_id = ?";
+        jdbcTemplate.update(sql, property.getAddress(), property.getRent(), property.getAvailable(), property.getTenantId(), property.getImageUrl(), propertyId);
+    }
 }
