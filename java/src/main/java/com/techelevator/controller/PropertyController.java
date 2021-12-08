@@ -17,7 +17,7 @@ public class PropertyController {
         this.propertyDao = propertyDao;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LANDLORD')")
     @PostMapping("/property")
     public ResponseEntity<?> add(@RequestBody Property property){
         return new ResponseEntity<>(propertyDao.addProperty(property), HttpStatus.OK);

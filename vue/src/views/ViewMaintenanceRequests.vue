@@ -4,20 +4,23 @@
       <v-progress-linear indeterminate color="cyan"></v-progress-linear>
     </div>
     <div v-else>
+      <h1 class="text-center">Maintenance Requests</h1>
+      <h2 class="text-center">Assigned to Me</h2>
       <div
         style="display: inline-block"
         v-for="request in requests"
-        :key="request.id"
+        :key="request.maintenanceRequestId"
       >
-        <v-card class="ma-6" max width="344" elevation="2">
+        <v-card class="ma-6 blue-grey lighten-5" max width="344" elevation="2">
           <v-card-text>
-            <h2>{{ request.address }}</h2>
-            <p>Requested: {{ request.timestamp }}</p>
+            <h2 class="mb-4">{{ request.address }}</h2>
+            <p>Requested: {{ request.timeStamp }}</p>
             <p>Request Type: {{ request.description }}</p>
-            <p>Contact Info: {{ request.contactInfo }}</p>
+            <p>Comments: {{request.comments}}</p>
+            <p>Contact Info: <ul><li>{{ request.name }}</li><li>{{ request.phone }}</li><li>{{ request.email }}</li></ul></p>
           </v-card-text>
           <v-card-actions>
-            <v-btn @click="markComplete">Mark As Complete</v-btn>
+            <v-btn class="mx-auto mb-4 green lighten-2" @click="markComplete(request.maintenanceRequestId)">Mark As Complete</v-btn>
           </v-card-actions>
         </v-card>
       </div>
@@ -51,23 +54,35 @@ export default {
     };
   },
   created() {
-    if (this.$store.state.user.id) {
-      maintenanceService
-        .getByUserId(this.$store.state.user.id)
-        .then((response) => {
-          if(response.status === 200){
-             this.requests = response.data;
-          }
-        });
-    } else {
-      this.$router.push("/login");
-    }
+    this.get();
   },
-  methods:{
-    markComplete(){
-
-    }
-  }
+  methods: {
+    get() {
+      if (this.$store.state.user.id) {
+        maintenanceService
+          .getByUserId(this.$store.state.user.id)
+          .then((response) => {
+            if (response.status === 200) {
+              this.requests = response.data;
+            }
+          });
+      } else {
+        this.$router.push("/login");
+      }
+    },
+    markComplete(maintenanceRequestId) {
+        maintenanceService
+          .markAsCompleteByMaintenanceRequestId(maintenanceRequestId)
+          .then((response) => {
+            if (response.status === 200) {
+              this.get();
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+    },
+  },
 };
 </script>
 
