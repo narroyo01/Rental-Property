@@ -22,4 +22,10 @@ public class PropertyController {
     public ResponseEntity<?> add(@RequestBody Property property){
         return new ResponseEntity<>(propertyDao.addProperty(property), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/property/{id}")
+    public void put(@PathVariable int id, @RequestBody Property property){
+        propertyDao.updateProperty(id, property);
+    }
 }
