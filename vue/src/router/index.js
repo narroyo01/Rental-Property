@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import AddProperty from '../views/AddProperty.vue'
 import store from '../store/index'
 import ViewMaintenanceRequests from '../views/ViewMaintenanceRequests.vue'
+import UpdateProperty from '../views/UpdateProperty.vue'
 
 Vue.use(Router)
 
@@ -71,6 +72,14 @@ const router = new Router({
         requiresAuth: false
       }
     },
+    {
+      path: "/update-property/:id",
+      name: "update-property",
+      component: UpdateProperty,
+      meta: {
+        requiresAuth: true
+      }
+    }
   ]
 })
 
