@@ -60,6 +60,7 @@ CREATE TABLE property (
         is_available BOOLEAN,
         tenant_id INT,
         image_url VARCHAR(500),
+        description VARCHAR(1000),
         
         CONSTRAINT pk_property PRIMARY KEY(property_id),
         CONSTRAINT fk_tenantid FOREIGN KEY(tenant_id) REFERENCES users(user_id)
@@ -117,7 +118,7 @@ CREATE TABLE maintenance_request (
         CONSTRAINT fk_requesterid FOREIGN KEY(requester_id) REFERENCES users(user_id)
 );
 
-INSERT INTO property (address, rent, is_available, tenant_id) VALUES ('1234 Jimmy St', 1200, true, 1);
+INSERT INTO property (address, rent, is_available, tenant_id, description) VALUES ('1234 Jimmy St', 1200, true, 1, 'This is a property');
 INSERT INTO property (address, rent, is_available) VALUES ('5678 John Dr', 2100, false);
 INSERT INTO property (address, rent, is_available, tenant_id) VALUES ('9012 Luke Boulevard', 1800, true, 2);
 

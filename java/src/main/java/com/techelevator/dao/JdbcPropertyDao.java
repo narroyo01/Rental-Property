@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Property;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,5 +27,33 @@ public class JdbcPropertyDao implements  PropertyDao{
                 " SET address = ?, rent = ?, is_available = ?, tenant_id = ?, image_url = ?" +
                 " WHERE property_id = ?";
         jdbcTemplate.update(sql, property.getAddress(), property.getRent(), property.getAvailable(), property.getTenantId(), property.getImageUrl(), propertyId);
+    }
+
+    @Override
+    public Property getPropertyById(int id) {
+        String sql = "SELECT property_id, address, rent, is_available, tenant_id, image_url, username, description" +
+                " FROM property" +
+                " JOIN users on tenant_id = user_id " +
+                "WHERE property_id = ?";
+        SqlRowSet rowset = jdbcTemplate.queryForRowSet(sql, id);
+        Property property = new Property();
+        if(rowset.next()) {
+            property = mapRowToProperty(rowset);
+        }
+
+        return property;
+    }
+
+    private Property mapRowToProperty(SqlRowSet rowSet) {
+        Property property = new Property();
+        property.setAddress(rowSet.getString("address"));
+        property.setRent(rowSet.getInt("rent"));
+        property.setAvailable(rowSet.getBoolean("is_available"));
+        property.setTenantId(rowSet.getInt("tenant_id"));
+        property.setImageUrl(rowSet.getString("image_url"));
+        property.setUsername(rowSet.getString("username"));
+        property.setDescription(rowSet.getString("description"));
+        property.setPropertyId(rowSet.getInt("property_id"));
+        return property;
     }
 }
