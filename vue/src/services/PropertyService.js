@@ -3,7 +3,7 @@ import axios from 'axios';
 export default {
 
   add(property) {
-    return axios.post('/add-property', property)
+    return axios.post('/property', property)
   },
 
 }

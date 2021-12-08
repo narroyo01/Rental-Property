@@ -15,9 +15,9 @@ public class JdbcPropertyDao implements  PropertyDao{
     }
 
     @Override
-    public void addProperty(Property property) {
-        String sql = "INSERT INTO property (address, rent, is_available, tenant_id) " +
-                "VALUES (?, ?, ?, ?);";
-        jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getRent(), true, null);
+    public int addProperty(Property property) {
+        String sql = "INSERT INTO property (address, rent, is_available, tenant_id, image_url) " +
+                "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
+        return jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getRent(), true, null, property.getImageUrl());
     }
 }

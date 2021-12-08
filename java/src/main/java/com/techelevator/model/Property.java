@@ -7,6 +7,19 @@ public class Property {
     private Integer rent;
     private Boolean isAvailable;
     private Integer tenantId;
+    private String imageUrl;
+
+    public Property(int propertyId, String address, Integer rent, Boolean isAvailable, Integer tenantId, String imageUrl) {
+        this.propertyId = propertyId;
+        this.address = address;
+        this.rent = rent;
+        this.isAvailable = isAvailable;
+        this.tenantId = tenantId;
+        this.imageUrl = imageUrl;
+    }
+
+    public Property() {
+    }
 
     public int getPropertyId() {
         return propertyId;
@@ -46,5 +59,25 @@ public class Property {
 
     public void setTenantId(Integer tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public void setRent(Integer rent) {
+        this.rent = rent;
+    }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
