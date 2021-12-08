@@ -2,14 +2,13 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.PropertyDao;
 import com.techelevator.model.Property;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/property")
+@CrossOrigin
 public class PropertyController {
 
     private PropertyDao propertyDao;
@@ -19,8 +18,8 @@ public class PropertyController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public void add(@RequestBody Property property){
-        propertyDao.addProperty(property);
+    @PostMapping("/property")
+    public ResponseEntity<?> add(@RequestBody Property property){
+        return new ResponseEntity<>(propertyDao.addProperty(property), HttpStatus.OK);
     }
 }

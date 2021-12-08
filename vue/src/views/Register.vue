@@ -98,9 +98,9 @@ export default {
         (value) => (value || "").length > 2 || "Min 3 characters",
       ],
       rulesPassword: [
-        value => !!value || 'Required',
-        value => (value || '').length <= 80 || 'Max 80 characters',
-        value => (value || '').length > 5 || 'Min 6 characters',
+        (value) => !!value || "Required",
+        (value) => (value || "").length <= 80 || "Max 80 characters",
+        (value) => (value || "").length > 5 || "Min 6 characters",
       ],
     };
   },
@@ -108,11 +108,11 @@ export default {
     register() {
       this.clearErrors();
       if (!this.$refs.form.validate()) return;
-      this.loading = true;
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = "Password & Confirm Password do not match.";
       } else {
+        this.loading = true;
         authService
           .register(this.user)
           .then((response) => {
