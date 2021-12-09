@@ -79,6 +79,14 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/property/:id",
+      name: "individual-property",
+      component: Login,
+      meta: {
+        requiresAuth: false
+      }
     }
   ]
 })
