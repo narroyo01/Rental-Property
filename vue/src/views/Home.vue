@@ -10,7 +10,7 @@
         v-for="property in properties"
         :key="property.id"
         :property="property"
-        style="display: inline-block"
+        style="display: inline-block; vertical-align: top;"
         class="mx-6 my-12"
       />
     </div>
@@ -34,7 +34,7 @@ export default {
   created() {
     propertyService.getAvailableProperties().then((response) => {
       if (response.status === 200) {
-        this.properties = response.data;
+        this.properties = response.data.splice(0,6);
       }
     });
   },

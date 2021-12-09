@@ -25,7 +25,7 @@ export default {
         propertyId: ""
       },
       navs: [
-        { title: "Available Properties", icon: "mdi-home-group", to: "/login" },
+        { title: "Properties", icon: "mdi-home-group", to: "/property" },
         {
           title: "Request Maintenance",
           icon: "mdi-account-wrench",

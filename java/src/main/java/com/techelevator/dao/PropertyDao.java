@@ -14,4 +14,6 @@ public interface PropertyDao {
 
     List<Property> getAvailableProperties();
 
+    List<Property> getProperties();
+
 }

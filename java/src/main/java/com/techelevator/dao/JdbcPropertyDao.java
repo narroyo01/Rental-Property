@@ -36,7 +36,7 @@ public class JdbcPropertyDao implements  PropertyDao{
     public Property getPropertyById(int id) {
         String sql = "SELECT property_id, address, rent, is_available, tenant_id, image_url, username, description" +
                 " FROM property" +
-                " JOIN users on tenant_id = user_id " +
+                " LEFT JOIN users on tenant_id = user_id " +
                 "WHERE property_id = ?";
         SqlRowSet rowset = jdbcTemplate.queryForRowSet(sql, id);
         Property property = new Property();
@@ -53,6 +53,18 @@ public class JdbcPropertyDao implements  PropertyDao{
         String sql = "SELECT property_id, address, rent, is_available, tenant_id, image_url, null as username, description " +
                 "FROM property " +
                 "WHERE is_available = true";
+        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
+        while(sqlRowSet.next()) {
+            properties.add(mapRowToProperty(sqlRowSet));
+        }
+        return properties;
+    }
+
+    @Override
+    public List<Property> getProperties() {
+        List<Property> properties = new ArrayList<>();
+        String sql = "SELECT property_id, address, rent, is_available, tenant_id, image_url, null as username, description " +
+                "FROM property ";
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
         while(sqlRowSet.next()) {
             properties.add(mapRowToProperty(sqlRowSet));
