@@ -8,7 +8,9 @@ export default {
   getById(id) {
     return axios.get('/property/' + id)
   },
-
+  getAvailableProperties() {
+    return axios.get('/property/available');
+  },
   update(property) {
     return axios.put('/property/' + property.propertyId, property)
   }
