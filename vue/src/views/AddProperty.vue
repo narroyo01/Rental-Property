@@ -29,6 +29,12 @@
       >
       </v-text-field>
 
+      <v-textarea
+        label="Description"
+        :rules="rulesDescription"
+        v-model="property.description"
+      ></v-textarea>
+
       <v-btn class="mt-4" elevation="2" color="primary" type="submit"
         >Add Property</v-btn
       >
@@ -50,6 +56,7 @@ export default {
         address: "",
         rent: 0.0,
         imageUrl: "",
+        description: "",
       },
       addPropertyErrors: false,
       addPropertyErrorMsg: "There were problems adding the property.",
@@ -65,6 +72,10 @@ export default {
         (value) => (value || "").length <= 200 || "Max 200 characters",
         (value) => (value || "").length > 2 || "Min 3 characters",
       ],
+      rulesDescription: [
+        (value) => !!value || "Required",
+        (value) => (value || "").length <= 1000 || "Max 1000 characters",
+      ],
     };
   },
   methods: {
@@ -76,7 +87,9 @@ export default {
         .add(this.property)
         .then((response) => {
           if (response.status == 200) {
-            console.log("we will now navigate you to /property/" + response.data)
+            console.log(
+              "we will now navigate you to /property/" + response.data
+            );
             //TODO this.$router.push("/property/" + response.data.id)
             this.loading = false;
           }
