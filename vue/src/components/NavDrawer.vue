@@ -21,6 +21,9 @@ export default {
   name: "NavDrawer",
   data() {
     return {
+      property: {
+        propertyId: ""
+      },
       navs: [
         { title: "Available Properties", icon: "mdi-home-group", to: "/login" },
         {

@@ -7,6 +7,10 @@ export default {
   },
   getById(id) {
     return axios.get('/property/' + id)
+  },
+
+  update(property) {
+    return axios.put('/property/' + property.propertyId, property)
   }
 
 }
