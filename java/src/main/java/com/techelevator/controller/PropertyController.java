@@ -23,7 +23,7 @@ public class PropertyController {
         return new ResponseEntity<>(propertyDao.addProperty(property), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LANDLORD')")
     @PutMapping("/property/{id}")
     public void put(@PathVariable int id, @RequestBody Property property){
         propertyDao.updateProperty(id, property);
@@ -42,6 +42,12 @@ public class PropertyController {
     @GetMapping("/property/")
     public ResponseEntity<?> getAll() {
         return new ResponseEntity<>(propertyDao.getProperties(), HttpStatus.OK);
+    }
+
+    @PostMapping("/property/{propertyId}/assign/{tenantId}")
+    public ResponseEntity<?> assignTenant(@PathVariable int propertyId, @PathVariable int tenantId) {
+        propertyDao.assignTenant(propertyId, tenantId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

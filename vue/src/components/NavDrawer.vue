@@ -31,6 +31,7 @@ export default {
           icon: "mdi-account-wrench",
           to: "/login",
         },
+        { title: "My Maintenance Tasks", icon: "mdi-account-hard-hat", to: "/maintenance-request" },
    //     { title: "Admin Portal", icon: "mdi-shield-account", to: "/login" },
         { title: "Add Property", icon: "mdi-home-group-plus", to: "/add-property"},
         { title: "Login", icon: "mdi-login", to: "/login" },
@@ -41,7 +42,9 @@ export default {
     activeNavs() {
       return this.navs.filter((nav) => {
         if (nav.title === "Login" && this.$store.state.user.username) return false;
+        
         if (nav.title === "Request Maintenance" && !this.$store.state.user.username) return false;
+
         if (nav.title === "Add Property" && ! this.$store.state.user.username) {
           return false;
         } else if (nav.title === "Add Property" && this.$store.state.user.username) {
@@ -49,6 +52,15 @@ export default {
             return false;
           }
         }
+
+        if (nav.title === "My Maintenance Tasks" && ! this.$store.state.user.username) {
+          return false;
+        } else if (nav.title === "My Maintenance Tasks" && this.$store.state.user.username) {
+          if (! (this.$store.state.user.authorities[0].name === "ROLE_MAINTENANCE" )) {
+            return false;
+          }
+        }
+
         return true;
       });
     },

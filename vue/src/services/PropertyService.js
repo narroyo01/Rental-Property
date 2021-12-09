@@ -2,6 +2,9 @@ import axios from 'axios';
 
 export default {
 
+  assignTenant(propertyId, tenantId) {
+    return axios.post('/property/' + propertyId + '/assign/' + tenantId)
+  },
   add(property) {
     return axios.post('/property', property)
   },
@@ -16,6 +19,7 @@ export default {
   },
   update(property) {
     return axios.put('/property/' + property.propertyId, property)
-  }
+  },
+  
 
 }

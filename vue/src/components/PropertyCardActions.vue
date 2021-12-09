@@ -1,17 +1,18 @@
 <template>
-  <v-card width="374">
-    <v-img height="250" :src="property.imageUrl"></v-img>
+  <v-card width="374" style="cursor:pointer">
+    <div @click="nav()">
+      <v-img height="250" :src="property.imageUrl"></v-img>
 
-    <v-card-title>{{ property.address }}</v-card-title>
+      <v-card-title>{{ property.address }}</v-card-title>
 
-    <p class="ms-4" v-if="isAuthorized">
-      {{ property.available ? "Available" : "Occupied" }}
-    </p>
+      <p class="ms-4" v-if="isAuthorized">
+        {{ property.available ? "Available" : "Occupied" }}
+      </p>
 
-    <p class="ms-4">{{ property.description }}</p>
+      <p class="ms-4">{{ property.description }}</p>
 
-    <p class="ms-4">Rent: ${{ property.rent }}</p>
-
+      <p class="ms-4">Rent: ${{ property.rent }}</p>
+    </div>
     <v-btn
       class="ma-2"
       v-if="isAuthorized"
@@ -38,6 +39,9 @@ export default {
   methods: {
     navToUpdate(id) {
       this.$router.push("/update-property/" + id);
+    },
+    nav() {
+      this.$router.push("/property/" + this.property.propertyId);
     },
   },
 };

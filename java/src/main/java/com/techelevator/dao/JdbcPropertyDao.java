@@ -19,17 +19,17 @@ public class JdbcPropertyDao implements  PropertyDao{
 
     @Override
     public int addProperty(Property property) {
-        String sql = "INSERT INTO property (address, rent, is_available, tenant_id, image_url) " +
-                "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
-        return jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getRent(), true, null, property.getImageUrl());
+        String sql = "INSERT INTO property (address, rent, is_available, tenant_id, image_url, description) " +
+                "VALUES (?, ?, ?, ?, ?, ?) RETURNING property_id;";
+        return jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getRent(), true, null, property.getImageUrl(), property.getDescription());
     }
 
     @Override
     public void updateProperty(int propertyId, Property property) {
         String sql = "UPDATE property" +
-                " SET address = ?, rent = ?, is_available = ?, tenant_id = ?, image_url = ?" +
+                " SET address = ?, rent = ?, is_available = ?, image_url = ?, description = ? " +
                 " WHERE property_id = ?";
-        jdbcTemplate.update(sql, property.getAddress(), property.getRent(), property.getAvailable(), property.getTenantId(), property.getImageUrl(), propertyId);
+        jdbcTemplate.update(sql, property.getAddress(), property.getRent(), property.getAvailable(),  property.getImageUrl(), property.getDescription(), propertyId);
     }
 
     @Override
@@ -70,6 +70,12 @@ public class JdbcPropertyDao implements  PropertyDao{
             properties.add(mapRowToProperty(sqlRowSet));
         }
         return properties;
+    }
+
+    @Override
+    public void assignTenant(int propertyId, int tenantId) {
+        String sql = "UPDATE property SET tenant_id = ? WHERE property_id = ?;";
+        jdbcTemplate.update(sql, tenantId, propertyId);
     }
 
     private Property mapRowToProperty(SqlRowSet rowSet) {
