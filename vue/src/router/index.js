@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import AddProperty from '../views/AddProperty.vue'
 import store from '../store/index'
 import ViewMaintenanceRequests from '../views/ViewMaintenanceRequests.vue'
+import ViewAllProperties from '../views/ViewAllProperties.vue'
 import UpdateProperty from '../views/UpdateProperty.vue'
 
 Vue.use(Router)
@@ -84,6 +85,14 @@ const router = new Router({
       path: "/property/:id",
       name: "individual-property",
       component: Login,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/property/",
+      name: "property",
+      component: ViewAllProperties,
       meta: {
         requiresAuth: false
       }

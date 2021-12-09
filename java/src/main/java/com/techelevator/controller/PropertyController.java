@@ -38,4 +38,10 @@ public class PropertyController {
     public ResponseEntity<?> getAvailable() {
         return new ResponseEntity<>(propertyDao.getAvailableProperties(), HttpStatus.OK);
     }
+
+    @GetMapping("/property/")
+    public ResponseEntity<?> getAll() {
+        return new ResponseEntity<>(propertyDao.getProperties(), HttpStatus.OK);
+    }
+
 }

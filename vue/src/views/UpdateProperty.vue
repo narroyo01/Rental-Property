@@ -6,7 +6,7 @@
     <div v-else>
       <v-container id="updatePropertyBox">
         <h1>Update Property</h1>
-        <v-form @submit.prevent="update" ref="form">
+        <v-form @submit.prevent="update" ref="form" class="mb-6">
           <v-text-field
             label="Address"
             :rules="rulesAddress"
@@ -47,9 +47,17 @@
             >Update</v-btn
           >
           <v-alert class="mt-6" type="error" v-if="updatePropertyErrors">
-        {{ updatePropertyErrorMsg }}
-      </v-alert>
+            {{ updatePropertyErrorMsg }}
+          </v-alert>
         </v-form>
+        Image:
+        <v-img
+        
+          :lazy-src="property.imageUrl"
+          max-height="150"
+          max-width="250"
+          :src="property.imageUrl"
+        ></v-img>
       </v-container>
     </div>
   </div>
@@ -58,7 +66,7 @@
 <script>
 import propertyService from "../services/PropertyService";
 export default {
-  name: "update property",
+  name: "update-property",
   data() {
     return {
       updatePropertyErrors: false,
@@ -102,19 +110,21 @@ export default {
       }
 
       this.loading = true;
-      propertyService.update(this.property).then((response) => {
-        if (response.status === 200) {
-          this.$router.push("/property/" + this.property.propertyId)
-        }
-      })
-      .catch((error) => {
+      propertyService
+        .update(this.property)
+        .then((response) => {
+          if (response.status === 200) {
+            this.$router.push("/property/" + this.property.propertyId);
+          }
+        })
+        .catch((error) => {
           this.loading = false;
           const response = error.response;
           this.updatePropertyErrors = true;
           if (response.status === 400) {
             this.updatePropertyErrorMsg = "Bad Request: Validation Errors";
           }
-        })
+        });
     },
   },
 };

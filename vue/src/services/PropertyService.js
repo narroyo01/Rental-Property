@@ -11,6 +11,9 @@ export default {
   getAvailableProperties() {
     return axios.get('/property/available');
   },
+  getProperties() {
+    return axios.get('/property/');
+  },
   update(property) {
     return axios.put('/property/' + property.propertyId, property)
   }
