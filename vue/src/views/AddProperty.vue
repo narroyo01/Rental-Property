@@ -35,12 +35,18 @@
         v-model="property.description"
       ></v-textarea>
 
-      <v-btn class="mt-4" elevation="2" color="primary" type="submit"
+      <v-btn class="my-4" elevation="2" color="primary" type="submit"
         >Add Property</v-btn
       >
-      <v-alert class="mt-6" type="error" v-if="addPropertyErrors">
+      <v-alert class="my-6" type="error" v-if="addPropertyErrors">
         {{ addPropertyErrorMsg }}
       </v-alert>
+      <div>Image:</div>
+      <v-img
+        :lazy-src="property.imageUrl"
+        max-width="600"
+        :src="property.imageUrl"
+      ></v-img>
     </v-container>
   </v-form>
 </template>
@@ -87,11 +93,7 @@ export default {
         .add(this.property)
         .then((response) => {
           if (response.status == 200) {
-            console.log(
-              "we will now navigate you to /property/" + response.data
-            );
-            //TODO this.$router.push("/property/" + response.data.id)
-            this.loading = false;
+            this.$router.push("/property/" + response.data);
           }
         })
         .catch((error) => {

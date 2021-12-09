@@ -26,7 +26,7 @@
           </thead>
           <tbody>
             <tr v-for="property in properties" :key="property.propertyId">
-              <td>{{ property.address }}</td>
+              <td><router-link :to="'/property/' + property.propertyId"> {{ property.address }} </router-link></td>
               <td>${{ property.rent }}</td>
               <td class="text-left" v-if="isAuthorized">
                 {{ property.available ? "Available" : "Occupied" }}

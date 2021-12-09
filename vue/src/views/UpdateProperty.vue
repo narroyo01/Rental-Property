@@ -52,24 +52,38 @@
         </v-form>
         Image:
         <v-img
-        
           :lazy-src="property.imageUrl"
-          max-height="150"
-          max-width="250"
+          max-width="600"
           :src="property.imageUrl"
         ></v-img>
+        <div class="mt-12">
+          <h3>Assign A Renter to this Property:</h3>
+          <assign-renter :renter="property.username" @assignTenant="assign"></assign-renter>
+        </div>
+        <v-alert class="mt-6" type="success" v-if="tenantAddSuccess">
+          Successfully assigned tenant to this property. Don't forget to update
+          the 'Availability' status if applicable!
+        </v-alert>
+        <v-alert class="mt-6" type="error" v-if="tenantAddFail">
+          Adding tenant failed!
+        </v-alert>
       </v-container>
     </div>
   </div>
 </template>
 
 <script>
+import AssignRenter from "../components/AssignRenter.vue";
 import propertyService from "../services/PropertyService";
+
 export default {
+  components: { AssignRenter },
   name: "update-property",
   data() {
     return {
       updatePropertyErrors: false,
+      tenantAddSuccess: false,
+      tenantAddFail: false,
       updatePropertyErrorMsg: "There were problems updating the property",
       property: {
         propertyId: "",
@@ -108,7 +122,6 @@ export default {
       if (!this.$refs.form.validate()) {
         return;
       }
-
       this.loading = true;
       propertyService
         .update(this.property)
@@ -126,6 +139,24 @@ export default {
           }
         });
     },
+    assign(tenant) {
+      propertyService
+        .assignTenant(this.$route.params.id, tenant)
+        .then((response) => {
+          if (response.status === 200) {
+            this.tenantAddSuccess = true;
+          }
+        })
+        .catch(() => {
+          this.tenantAddFail = true;
+        });
+    },
   },
 };
 </script>
+
+<style>
+#updatePropertyBox {
+  max-width: 600px;
+}
+</style>
