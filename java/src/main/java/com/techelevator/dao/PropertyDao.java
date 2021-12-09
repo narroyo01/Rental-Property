@@ -10,4 +10,8 @@ public interface PropertyDao {
 
     void updateProperty(int propertyId, Property property);
 
+    Property getPropertyById(int id);
+
+    List<Property> getAvailableProperties();
+
 }

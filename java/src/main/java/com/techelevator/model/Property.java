@@ -7,15 +7,19 @@ public class Property {
     private Integer rent;
     private Boolean isAvailable;
     private Integer tenantId;
+    private String username;
     private String imageUrl;
+    private String description;
 
-    public Property(int propertyId, String address, Integer rent, Boolean isAvailable, Integer tenantId, String imageUrl) {
+    public Property(int propertyId, String address, Integer rent, Boolean isAvailable, Integer tenantId, String imageUrl, String username, String description) {
         this.propertyId = propertyId;
         this.address = address;
         this.rent = rent;
         this.isAvailable = isAvailable;
         this.tenantId = tenantId;
         this.imageUrl = imageUrl;
+        this.username = username;
+        this.description = description;
     }
 
     public Property() {
@@ -79,5 +83,21 @@ public class Property {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

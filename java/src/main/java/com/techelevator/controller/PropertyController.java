@@ -28,4 +28,14 @@ public class PropertyController {
     public void put(@PathVariable int id, @RequestBody Property property){
         propertyDao.updateProperty(id, property);
     }
+
+    @GetMapping("/property/{id}")
+    public ResponseEntity<?> get(@PathVariable int id) {
+        return new ResponseEntity<>(propertyDao.getPropertyById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/property/available")
+    public ResponseEntity<?> getAvailable() {
+        return new ResponseEntity<>(propertyDao.getAvailableProperties(), HttpStatus.OK);
+    }
 }
