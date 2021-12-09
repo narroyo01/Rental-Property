@@ -4,16 +4,17 @@
       <v-progress-linear indeterminate color="cyan"></v-progress-linear>
     </div>
     <div v-else>
-        <v-container id="updatePropertyBox">
-            <h1>Update Property</h1>
-        </v-container>
-        <v-text-field
-            label="Address"
-            :rules="rulesAddress"
-            :loading="loading"
-            v-model="property.address"></v-text-field>
+      <v-container id="updatePropertyBox">
+        <h1>Update Property</h1>
+      </v-container>
+      <v-text-field
+        label="Address"
+        :rules="rulesAddress"
+        :loading="loading"
+        v-model="property.address"
+      ></v-text-field>
 
-        <v-text-field
+      <v-text-field
         label="Rent"
         :loading="loading"
         :rules="rulesRent"
@@ -29,14 +30,15 @@
         :loading="loading"
         :rules="rulesImage"
         v-model="property.imageUrl"
-     ></v-text-field>
+      ></v-text-field>
 
-     <v-switch
+      <v-switch
         v-model="property.available"
-        :label="property.available? 'Available': 'Not Available'">
-        </v-switch>
+        :label="property.available ? 'Available' : 'Not Available'"
+      >
+      </v-switch>
 
-     <v-textarea
+      <v-textarea
         label="Description"
         :rules="rulesDescription"
         v-model="property.description"
@@ -72,7 +74,7 @@ export default {
       rulesDescription: [
         (value) => !!value || "Required",
         (value) => (value || "").length <= 1000 || "Max 1000 characters",
-      ]
+      ],
     };
   },
   created() {

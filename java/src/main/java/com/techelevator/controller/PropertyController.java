@@ -33,4 +33,9 @@ public class PropertyController {
     public ResponseEntity<?> get(@PathVariable int id) {
         return new ResponseEntity<>(propertyDao.getPropertyById(id), HttpStatus.OK);
     }
+
+    @GetMapping("/property/available")
+    public ResponseEntity<?> getAvailable() {
+        return new ResponseEntity<>(propertyDao.getAvailableProperties(), HttpStatus.OK);
+    }
 }

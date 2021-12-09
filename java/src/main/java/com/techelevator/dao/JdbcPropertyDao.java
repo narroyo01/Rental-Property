@@ -5,6 +5,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class JdbcPropertyDao implements  PropertyDao{
 
@@ -42,6 +45,19 @@ public class JdbcPropertyDao implements  PropertyDao{
         }
 
         return property;
+    }
+
+    @Override
+    public List<Property> getAvailableProperties() {
+        List<Property> properties = new ArrayList<>();
+        String sql = "SELECT property_id, address, rent, is_available, tenant_id, image_url, null as username, description " +
+                "FROM property " +
+                "WHERE is_available = true";
+        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
+        while(sqlRowSet.next()) {
+            properties.add(mapRowToProperty(sqlRowSet));
+        }
+        return properties;
     }
 
     private Property mapRowToProperty(SqlRowSet rowSet) {
