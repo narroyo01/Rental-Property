@@ -18,7 +18,7 @@
 <script>
 import transactionService from '../services/TransactionService';
 export default {
-    name: "transactions",
+    name: "ViewAllRent",
     data(){
         return {
             transactions: null
