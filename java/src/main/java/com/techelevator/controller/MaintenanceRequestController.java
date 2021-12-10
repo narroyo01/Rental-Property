@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.JdbcMaintenanceRequestDao;
+import com.techelevator.model.MaintenanceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,4 +27,16 @@ public class MaintenanceRequestController {
         jdbcMaintenanceRequestDao.markAsComplete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/maintenance-request/")
+    public ResponseEntity<?> submitMaintenanceRequest(@RequestBody MaintenanceRequest maintenanceRequest) {
+        jdbcMaintenanceRequestDao.maintenanceRequest(maintenanceRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/maintenance-types")
+    public ResponseEntity<?> getTypes(){
+        return new ResponseEntity<>(jdbcMaintenanceRequestDao.getTypes(),HttpStatus.OK);
+    }
+
 }

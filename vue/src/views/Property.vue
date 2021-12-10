@@ -6,7 +6,11 @@
     <div v-else>
       <v-container id="propertyBox">
         <h1>{{ property.address }}</h1>
-        <v-img :src="property.imageUrl" max-width="800" style="border-radius:10px"></v-img>
+        <v-img
+          :src="property.imageUrl"
+          max-width="800"
+          style="border-radius: 10px"
+        ></v-img>
         <p class="mt-4" v-if="isAuthorized">
           {{ property.available ? "Available" : "Occupied" }}
         </p>
@@ -24,6 +28,7 @@
         <v-btn class="ma-2" v-if="isAuthorized"
           >Create Maintenance Request</v-btn
         >
+        <request-maintenance-form :propertyId ="this.$route.params.id" v-if="isAuthorized"/>
       </v-container>
     </div>
   </div>
@@ -31,9 +36,13 @@
 
 <script>
 import propertyService from "../services/PropertyService";
+import RequestMaintenanceForm from "../components/RequestMaintenanceForm.vue";
 
 export default {
   name: "Property",
+  components: {
+    RequestMaintenanceForm,
+  },
   data() {
     return {
       property: null,
@@ -65,6 +74,6 @@ export default {
 
 <style scoped>
 #propertyBox {
-  max-width:800px;
+  max-width: 800px;
 }
 </style>

@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.MaintenanceRequest;
+import com.techelevator.model.MaintenanceType;
 import com.techelevator.model.Property;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -37,6 +38,28 @@ public class JdbcMaintenanceRequestDao implements MaintenanceRequestDao {
             maintenanceRequests.add(mapRowToMaintenanceRequest(sqlRowSet));
         }
         return maintenanceRequests;
+    }
+
+    @Override
+    public int maintenanceRequest(MaintenanceRequest maintenanceRequest) {
+        String sql = "INSERT INTO maintenance_request ( property_id, type_id, requester_id, time_stamp, email, phone, name, comments, is_complete) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING maintenance_request_id ;";
+       return jdbcTemplate.queryForObject(sql, int.class, maintenanceRequest.getPropertyId(), maintenanceRequest.getTypeId(), maintenanceRequest.getRequesterId(),
+               maintenanceRequest.getTimeStamp(), maintenanceRequest.getEmail(), maintenanceRequest.getPhone(), maintenanceRequest.getName(), maintenanceRequest.getComments(), false);
+    }
+
+    @Override
+    public List<MaintenanceType> getTypes() {
+        String sql = "SELECT * from maintenance_type;";
+        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
+        List<MaintenanceType> maintenanceTypes = new ArrayList<>();
+        while (sqlRowSet.next()){
+            MaintenanceType maintenanceType = new MaintenanceType();
+            maintenanceType.setMaintenanceTypeId(sqlRowSet.getInt("maintenance_type_id"));
+            maintenanceType.setDescription(sqlRowSet.getString("description"));
+            maintenanceTypes.add(maintenanceType);
+        }
+        return maintenanceTypes;
     }
 
     private MaintenanceRequest mapRowToMaintenanceRequest(SqlRowSet sqlRowSet) {

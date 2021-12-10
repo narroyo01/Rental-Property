@@ -8,6 +8,13 @@ export default {
 
   markAsCompleteByMaintenanceRequestId(id) {
     return axios.post(`/maintenance-request/complete/${id}`)
-  }
+  },
 
+  maintenanceRequest(mr) {
+    return axios.post(`/maintenance-request/`, mr)
+  },
+
+  getTypes(){
+    return axios.get('/maintenance-types')
+  }
 }
