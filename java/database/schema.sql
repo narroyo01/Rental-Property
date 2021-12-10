@@ -89,8 +89,8 @@ CREATE TABLE inquiry (
 
 CREATE TABLE transactions (
         transaction_id INT DEFAULT nextval('seq_transaction_id'::regclass),
-        time_initiated timestamp,
-        time_paid timestamp,
+        time_initiated date,
+        time_paid date,
         amount_due INT,
         amount_paid INT,
         property_id INT,

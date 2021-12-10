@@ -17,4 +17,6 @@ public interface PropertyDao {
     List<Property> getProperties();
 
     void assignTenant(int propertyId, int tenantId);
+
+    List<Property> getAllPropertyRent();
 }

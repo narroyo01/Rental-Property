@@ -6,6 +6,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -76,6 +77,17 @@ public class JdbcPropertyDao implements  PropertyDao{
     public void assignTenant(int propertyId, int tenantId) {
         String sql = "UPDATE property SET tenant_id = ? WHERE property_id = ?;";
         jdbcTemplate.update(sql, tenantId, propertyId);
+    }
+
+    @Override
+    public List<Property> getAllPropertyRent() {
+        List<Property> properties = new ArrayList<>();
+        String sql = "SELECT property_id FROM property ";
+        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
+        while(sqlRowSet.next()) {
+            properties.add(mapRowToProperty(sqlRowSet));
+        }
+        return properties;
     }
 
     private Property mapRowToProperty(SqlRowSet rowSet) {
