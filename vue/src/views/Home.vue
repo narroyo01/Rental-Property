@@ -1,20 +1,17 @@
 <template>
   <div>
     <hello-world />
-    <request-maintenance-form />
   </div>
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
-import RequestMaintenanceForm from "../components/RequestMaintenanceForm";
+import HelloWorld from "../components/HelloWorld",
 
 export default {
   name: "Home",
 
   components: {
     HelloWorld,
-    RequestMaintenanceForm,
   },
 };
 </script>
