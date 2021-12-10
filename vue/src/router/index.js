@@ -11,6 +11,7 @@ import ViewAllProperties from '../views/ViewAllProperties.vue'
 import UpdateProperty from '../views/UpdateProperty.vue'
 import Property from '../views/Property.vue'
 
+
 Vue.use(Router)
 
 /**
@@ -71,7 +72,7 @@ const router = new Router({
       name: "maintenance-request",
       component: ViewMaintenanceRequests,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
