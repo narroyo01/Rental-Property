@@ -79,17 +79,6 @@ public class JdbcPropertyDao implements  PropertyDao{
         jdbcTemplate.update(sql, tenantId, propertyId);
     }
 
-    @Override
-    public List<Property> getAllPropertyRent() {
-        List<Property> properties = new ArrayList<>();
-        String sql = "SELECT property_id FROM property ";
-        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
-        while(sqlRowSet.next()) {
-            properties.add(mapRowToProperty(sqlRowSet));
-        }
-        return properties;
-    }
-
     private Property mapRowToProperty(SqlRowSet rowSet) {
         Property property = new Property();
         property.setAddress(rowSet.getString("address"));

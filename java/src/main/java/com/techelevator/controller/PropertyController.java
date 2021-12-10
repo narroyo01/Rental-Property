@@ -52,9 +52,5 @@ public class PropertyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/property/rent")
-    public ResponseEntity<?> getAllRent() {
-        return new ResponseEntity<>(propertyDao.getAllPropertyRent(), HttpStatus.OK);
-    }
 
 }

@@ -98,7 +98,15 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    }
+    },
+    // {
+    //   path: "/transaction",
+    //   name: "rent",
+    //   component: ViewAllRent,
+    //   meta: {
+    //     requiresAuth: true
+    //   }
+    // }
   ]
 })
 
