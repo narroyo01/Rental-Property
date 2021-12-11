@@ -2,19 +2,21 @@ package com.techelevator.model;
 
 import java.sql.Timestamp;
 
+import static java.lang.Integer.parseInt;
+
 public class Transaction {
     private int transactionId;
     private Timestamp timeInitiated;
-    private Timestamp timePaid;
+    private String timePaid;
     private int amountDue;
     private int amountPaid;
     private int propertyId;
     private int tenantId;
-    private Timestamp timeDue;
+    private String timeDue;
     private String status;
     private String address;
 
-    public Transaction(String address, Timestamp timeDue, String status, int transactionId, Timestamp timeInitiated, Timestamp timePaid, int amountDue, int amountPaid, int propertyId, int tenantId) {
+    public Transaction(String address, String timeDue, String status, int transactionId, Timestamp timeInitiated, String timePaid, int amountDue, int amountPaid, int propertyId, int tenantId) {
         this.transactionId = transactionId;
         this.timeInitiated = timeInitiated;
         this.timePaid = timePaid;
@@ -47,11 +49,11 @@ public class Transaction {
         this.timeInitiated = timeInitiated;
     }
 
-    public Timestamp getTimePaid() {
+    public String getTimePaid() {
         return timePaid;
     }
 
-    public void setTimePaid(Timestamp timePaid) {
+    public void setTimePaid(String timePaid) {
         this.timePaid = timePaid;
     }
 
@@ -87,11 +89,11 @@ public class Transaction {
         this.tenantId = tenantId;
     }
 
-    public Timestamp getTimeDue() {
+    public String getTimeDue() {
         return timeDue;
     }
 
-    public void setTimeDue(Timestamp timeDue) {
+    public void setTimeDue(String timeDue) {
         this.timeDue = timeDue;
     }
 
@@ -109,5 +111,37 @@ public class Transaction {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int compareTime(String timeOne, String timeTwo) {
+        int monthOne = parseInt(timeOne.substring(5, 7));
+        int monthTwo = parseInt(timeTwo.substring(5, 7));
+
+        int dayOne = parseInt(timeOne.substring(8));
+        int dayTwo = parseInt(timeTwo.substring(8));
+
+        int yearOne = parseInt(timeOne.substring(0, 4));
+        int yearTwo = parseInt(timeTwo.substring(0, 4));
+
+        if (yearOne > yearTwo) {
+            return 1;
+        } else if (yearOne < yearTwo) {
+            return -1;
+        } else if (yearOne == yearTwo) {
+            if (monthOne > monthTwo) {
+                return 1;
+            } else if (monthOne < monthTwo) {
+                return -1;
+            } else if (monthOne == monthTwo) {
+                if (dayOne > dayTwo) {
+                    return 1;
+                } else if (dayOne < dayTwo) {
+                    return -1;
+                } else if (dayOne == dayTwo) {
+                    return 0;
+                }
+            }
+        }
+        return -2;
     }
 }

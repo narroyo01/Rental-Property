@@ -35,7 +35,7 @@ export default {
    //     { title: "Admin Portal", icon: "mdi-shield-account", to: "/login" },
         { title: "Add Property", icon: "mdi-home-group-plus", to: "/add-property"},
         { title: "Login", icon: "mdi-login", to: "/login" },
-        {title: "View Rent", to: "/transaction"}
+        {title: "View Rent", icon: "mdi-currency-usd", to: "/transaction"}
       ],
     };
   },

@@ -29,26 +29,26 @@ public class JdbcTransactionDao implements  TransactionDao{
                 " JOIN property ON property.property_id = transactions.property_id;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
         while(rowSet.next()) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Transaction transaction = new Transaction();
             transaction.setPropertyId(rowSet.getInt("property_id"));
             transaction.setTimeInitiated(rowSet.getTimestamp("time_initiated"));
             transaction.setAmountDue(rowSet.getInt("amount_due"));
             transaction.setAmountPaid(rowSet.getInt("amount_paid"));
-            transaction.setTimePaid(rowSet.getTimestamp("time_paid"));
+            transaction.setTimePaid(rowSet.getString("time_paid"));
             transaction.setTransactionId(rowSet.getInt("transaction_id"));
             transaction.setAddress(rowSet.getString("address"));
             LocalDate timeDue = transaction.getTimeInitiated().toLocalDateTime().toLocalDate();
             timeDue = timeDue.plusMonths(1);
             Timestamp newTimeDue = Timestamp.valueOf(timeDue.atStartOfDay());
             //format date
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-            //transaction.setTimeDue(formatter.format(newTimeDue));
+            transaction.setTimeDue(formatter.format(newTimeDue));
             String status = "";
             if (transaction.getAmountPaid() >= transaction.getAmountDue()) {
                 status = "paid";
-            } else if (transaction.getAmountPaid() < transaction.getAmountDue() && transaction.getTimePaid().before(transaction.getTimeDue())){
+            } else if (transaction.getAmountPaid() < transaction.getAmountDue() && (transaction.compareTime(transaction.getTimePaid(), transaction.getTimeDue()) <= 0)) {
                 status = "due";
-            } else if (transaction.getAmountPaid() < transaction.getAmountDue() && transaction.getTimePaid().after(transaction.getTimeDue())){
+            } else if (transaction.getAmountPaid() < transaction.getAmountDue() && (transaction.compareTime(transaction.getTimePaid(), transaction.getTimeDue())) > 0){
                 status = "overdue";
             }
             transaction.setStatus(status);
@@ -61,7 +61,7 @@ public class JdbcTransactionDao implements  TransactionDao{
         Transaction transaction = new Transaction();
         transaction.setTransactionId(rowSet.getInt("transaction_id"));
         transaction.setTimeInitiated(rowSet.getTimestamp("time_initiated"));
-        transaction.setTimePaid(rowSet.getTimestamp("time_paid"));
+        transaction.setTimePaid(rowSet.getString("time_paid"));
         transaction.setAmountDue(rowSet.getInt("amount_due"));
         transaction.setAmountPaid(rowSet.getInt("amount_paid"));
         transaction.setPropertyId(rowSet.getInt("property_id"));
