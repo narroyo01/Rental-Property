@@ -12,8 +12,9 @@ public class Transaction {
     private int tenantId;
     private Timestamp timeDue;
     private String status;
+    private String address;
 
-    public Transaction(Timestamp timeDue, String status, int transactionId, Timestamp timeInitiated, Timestamp timePaid, int amountDue, int amountPaid, int propertyId, int tenantId) {
+    public Transaction(String address, Timestamp timeDue, String status, int transactionId, Timestamp timeInitiated, Timestamp timePaid, int amountDue, int amountPaid, int propertyId, int tenantId) {
         this.transactionId = transactionId;
         this.timeInitiated = timeInitiated;
         this.timePaid = timePaid;
@@ -23,6 +24,7 @@ public class Transaction {
         this.tenantId = tenantId;
         this.timeDue = timeDue;
         this.status = status;
+        this.address = address;
     }
 
     public Transaction(){
@@ -99,5 +101,13 @@ public class Transaction {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
