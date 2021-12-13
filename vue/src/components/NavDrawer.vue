@@ -35,6 +35,7 @@ export default {
    //     { title: "Admin Portal", icon: "mdi-shield-account", to: "/login" },
         { title: "Add Property", icon: "mdi-home-group-plus", to: "/add-property"},
         { title: "Login", icon: "mdi-login", to: "/login" },
+        {title: "View Rent", icon: "mdi-currency-usd", to: "/transaction"}
       ],
     };
   },
@@ -48,6 +49,14 @@ export default {
         if (nav.title === "Add Property" && ! this.$store.state.user.username) {
           return false;
         } else if (nav.title === "Add Property" && this.$store.state.user.username) {
+          if (! (this.$store.state.user.authorities[0].name === "ROLE_ADMIN" || this.$store.state.user.authorities[0].name === "ROLE_LANDLORD")) {
+            return false;
+          }
+        }
+
+        if (nav.title === "View Rent" && ! this.$store.state.user.username) {
+          return false;
+        } else if (nav.title === "View Rent" && this.$store.state.user.username) {
           if (! (this.$store.state.user.authorities[0].name === "ROLE_ADMIN" || this.$store.state.user.authorities[0].name === "ROLE_LANDLORD")) {
             return false;
           }

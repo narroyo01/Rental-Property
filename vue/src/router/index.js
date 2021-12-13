@@ -10,6 +10,7 @@ import ViewMaintenanceRequests from '../views/ViewMaintenanceRequests.vue'
 import ViewAllProperties from '../views/ViewAllProperties.vue'
 import UpdateProperty from '../views/UpdateProperty.vue'
 import Property from '../views/Property.vue'
+import ViewAllRent from '../views/ViewAllRent.vue'
 
 
 Vue.use(Router)
@@ -97,6 +98,14 @@ const router = new Router({
       component: ViewAllProperties,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path: "/transaction",
+      name: "rent",
+      component: ViewAllRent,
+      meta: {
+        requiresAuth: true
       }
     }
   ]
