@@ -19,4 +19,5 @@ public class UserController {
     public ResponseEntity<?> get(@RequestParam(name = "role") String role) {
         return new ResponseEntity<>(jdbcUserDao.getUsersByRole(role), HttpStatus.OK);
     }
+
 }

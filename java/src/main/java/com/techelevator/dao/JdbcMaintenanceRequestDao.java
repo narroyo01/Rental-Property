@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.sun.tools.javac.Main;
 import com.techelevator.model.MaintenanceRequest;
 import com.techelevator.model.MaintenanceType;
 import com.techelevator.model.Property;
@@ -61,6 +62,24 @@ public class JdbcMaintenanceRequestDao implements MaintenanceRequestDao {
         }
         return maintenanceTypes;
     }
+
+    @Override
+    public void assignTechnician(int maintenanceRequestId, int technicianId) {
+        String sql = "UPDATE maintenance_request SET technician_id = ? WHERE maintenance_request_id = ? ;";
+        jdbcTemplate.update(sql,technicianId,maintenanceRequestId);
+    }
+
+    @Override
+    public List<MaintenanceRequest> getOpenMaintenanceRequests() {
+        List<MaintenanceRequest> maintenanceRequests = new ArrayList<>();
+        String sql = "SELECT * FROM maintenance_request WHERE is_complete = false ; ";
+        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
+        while(sqlRowSet.next()){
+            maintenanceRequests.add(mapRowToMaintenanceRequest(sqlRowSet));
+        }
+        return maintenanceRequests;
+    }
+
 
     private MaintenanceRequest mapRowToMaintenanceRequest(SqlRowSet sqlRowSet) {
         MaintenanceRequest maintenanceRequest = new MaintenanceRequest();

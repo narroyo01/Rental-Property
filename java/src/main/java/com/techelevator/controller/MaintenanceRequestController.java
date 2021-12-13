@@ -39,4 +39,15 @@ public class MaintenanceRequestController {
         return new ResponseEntity<>(jdbcMaintenanceRequestDao.getTypes(),HttpStatus.OK);
     }
 
+    @PostMapping("/maintenance-request/{maintenanceRequestId}/assign/{technicianId}")
+    public ResponseEntity<?> assignTechnician(@PathVariable int maintenanceId, @PathVariable int technicianId){
+        jdbcMaintenanceRequestDao.assignTechnician(maintenanceId,technicianId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+     @PostMapping("/maintenance-request/open")
+    public ResponseEntity<?>getOpenMaintenanceRequests() {
+        return new ResponseEntity<>(jdbcMaintenanceRequestDao.getOpenMaintenanceRequests(), HttpStatus.OK);
+    }
+
 }
