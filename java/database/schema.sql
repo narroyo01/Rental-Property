@@ -89,10 +89,10 @@ CREATE TABLE inquiry (
 
 CREATE TABLE transactions (
         transaction_id INT DEFAULT nextval('seq_transaction_id'::regclass),
-        time_initiated timestamp,
-        time_paid timestamp,
+        time_initiated date,
+        time_paid date DEFAULT '01/01/2000',
         amount_due INT,
-        amount_paid INT,
+        amount_paid INT DEFAULT 0,
         property_id INT,
         tenant_id INT,
         
@@ -142,7 +142,13 @@ INSERT INTO property (address, rent, is_available, image_url, description) VALUE
 INSERT INTO inquiry (email, phone, message, property_id) VALUES ('someone@yahoo.com', '123-456-7890', 'I am intersted in renting this apartment', 1);
 
 INSERT INTO transactions (time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id)
-VALUES ('10/1/2021', '11/1/2021', 1400, 1400, 4, 8),('10/1/2021', null, 900, null, 5, 9);
+VALUES ('10/1/2021', '11/1/2021', 1400, 1400, 4, 8);
+
+INSERT INTO transactions (time_initiated, amount_due, property_id, tenant_id)
+VALUES ('10/1/2021', 900, 5, 9);
+
+INSERT INTO transactions (time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id)
+VALUES ('10/1/2021', '11/10/2021', 1000, 500, 1, 2);
 
 INSERT INTO maintenance_type (description) VALUES ('Plumbing'),('Structural'),('Electrical'),('HVAC'),('Exterior'),('Other');
 
