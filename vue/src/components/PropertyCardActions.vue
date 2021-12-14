@@ -20,7 +20,6 @@
       >Update</v-btn
     >
     <v-btn class="ma-2" v-if="isAuthorized">Create Maintenance Request</v-btn>
-    <v-btn class="ma-2" @click="navToInquire(property.propertyId)">Inquire</v-btn>
   </v-card>
 </template>
 
@@ -44,9 +43,6 @@ export default {
     nav() {
       this.$router.push("/property/" + this.property.propertyId);
     },
-    navToInquire(id) {
-      this.$router.push("/inquire/" + id);
-    }
   },
 };
 </script>
