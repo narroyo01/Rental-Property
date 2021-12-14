@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.sun.tools.javac.Main;
 import com.techelevator.model.MaintenanceRequest;
 import com.techelevator.model.MaintenanceType;
 import com.techelevator.model.Property;
@@ -62,6 +63,24 @@ public class JdbcMaintenanceRequestDao implements MaintenanceRequestDao {
         return maintenanceTypes;
     }
 
+    @Override
+    public void assignTechnician(int maintenanceRequestId, int technicianId) {
+        String sql = "UPDATE maintenance_request SET technician_id = ? WHERE maintenance_request_id = ? ;";
+        jdbcTemplate.update(sql,technicianId,maintenanceRequestId);
+    }
+
+    @Override
+    public List<MaintenanceRequest> getOpenMaintenanceRequests() {
+        List<MaintenanceRequest> maintenanceRequests = new ArrayList<>();
+        String sql = "SELECT * FROM maintenance_request WHERE technician_id is null ; ";
+        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
+        while(sqlRowSet.next()){
+            maintenanceRequests.add(mapRowToMaintenanceRequest(sqlRowSet));
+        }
+        return maintenanceRequests;
+    }
+
+
     private MaintenanceRequest mapRowToMaintenanceRequest(SqlRowSet sqlRowSet) {
         MaintenanceRequest maintenanceRequest = new MaintenanceRequest();
         maintenanceRequest.setMaintenanceRequestId(sqlRowSet.getInt("maintenance_request_id"));
@@ -75,8 +94,6 @@ public class JdbcMaintenanceRequestDao implements MaintenanceRequestDao {
         maintenanceRequest.setPhone(sqlRowSet.getString("phone"));
         maintenanceRequest.setName(sqlRowSet.getString("name"));
         maintenanceRequest.setComments(sqlRowSet.getString("comments"));
-        maintenanceRequest.setAddress(sqlRowSet.getString("address"));
-        maintenanceRequest.setDescription(sqlRowSet.getString("description"));
         return maintenanceRequest;
     }
 }
