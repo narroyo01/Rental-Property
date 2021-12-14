@@ -16,5 +16,15 @@ export default {
 
   getTypes(){
     return axios.get('/maintenance-types')
-  }
+  },
+
+  getOpenMaintenanceRequests(){
+    return axios.get('/maintenance-request/open')
+  },
+
+  assignTechnician(maintenanceRequestId, technicianId){
+    return axios.post('/maintenance-request/' + maintenanceRequestId + '/assign/' + technicianId)
+  },
+
+  
 }

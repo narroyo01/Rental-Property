@@ -147,6 +147,9 @@ VALUES ('10/1/2021', '11/1/2021', 1400, 1400, 4, 8);
 INSERT INTO transactions (time_initiated, amount_due, property_id, tenant_id)
 VALUES ('10/1/2021', 900, 5, 9);
 
+INSERT INTO transactions (time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id)
+VALUES ('10/1/2021', '11/10/2021', 1000, 500, 1, 2);
+
 INSERT INTO maintenance_type (description) VALUES ('Plumbing'),('Structural'),('Electrical'),('HVAC'),('Exterior'),('Other');
 
 INSERT INTO maintenance_request 
