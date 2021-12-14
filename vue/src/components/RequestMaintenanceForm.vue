@@ -1,6 +1,10 @@
 <template>
   <v-container id="form">
-    <v-form v-if="maintenanceTypes !== null" ref="form" @submit.prevent="submit">
+    <v-form
+      v-if="maintenanceTypes !== null"
+      ref="form"
+      @submit.prevent="submit"
+    >
       <h1 id="header">Maintenance Request Form</h1>
       <v-text-field
         :loading="loading"
@@ -33,6 +37,13 @@
         label="Description"
         v-model="request.comments"
       ></v-textarea>
+      <v-alert
+        class="my-4"
+        type="success"
+        v-if="success"
+      >
+        Maintenance Request submitted successfully, a technician will be in touch as soon as possible.
+      </v-alert>
       <v-btn class="mt-4" elevation="2" color="primary" type="submit"
         >Submit</v-btn
       >
@@ -48,17 +59,18 @@ export default {
   props: ["propertyId"],
   data() {
     return {
+      success: false,
       maintenanceTypes: null,
       types: null,
       type: "",
       request: {
-        typeId:"",
+        typeId: "",
         timeStamp: Date.now(),
         requesterId: "",
         name: "",
         email: "",
         phone: "",
-        
+
         comments: "",
         propertyId: this.propertyId,
       },
@@ -75,7 +87,7 @@ export default {
       rulesPhone: [(value) => !!value || "Required"],
       rulesEmail: [
         (value) => !!value || "Required",
-        (value) => this.validateEmail(value) || "Invalid Email",
+        //(value) => this.validateEmail(value) || "Invalid Email",
       ],
       rulesDescription: [
         (value) => !!value || "Required",
@@ -85,7 +97,7 @@ export default {
       rulesSelect: [(value) => !!value || "Required"],
     };
   },
-  
+
   methods: {
     phonenumber(inputtxt) {
       var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -105,16 +117,16 @@ export default {
     },
     submit() {
       this.clearErrors();
+      this.success = false;
       if (!this.$refs.form.validate()) return;
       this.loading = true;
       this.request.requesterId = this.$store.state.user.id;
-      this.request.typeId = this.getSelectedTypeId()
+      this.request.typeId = this.getSelectedTypeId();
       MaintenanceService.maintenanceRequest(this.request)
         .then((response) => {
           if (response.status === 201) {
-            // this.$router.push("/property/" + response.data);
-            // TODO set route to final
-            console.log("submit success");
+            this.success = true;
+            this.loading = false;
           }
         })
         .catch((error) => {
@@ -126,10 +138,10 @@ export default {
           }
         });
     },
-    getSelectedTypeId(){
-        return this.maintenanceTypes.find((type) =>{
-          return type.description === this.type;
-        }).maintenanceTypeId;
+    getSelectedTypeId() {
+      return this.maintenanceTypes.find((type) => {
+        return type.description === this.type;
+      }).maintenanceTypeId;
     },
     clearErrors() {
       this.maintenanceRequestErrors = false;
@@ -137,7 +149,8 @@ export default {
         "There were problems submitting maintenance request.";
     },
   },
-  created() { /* eslint-disable no-unused-vars */
+  created() {
+    /* eslint-disable no-unused-vars */
     MaintenanceService.getTypes().then((response) => {
       if (response.status === 200) {
         this.maintenanceTypes = response.data;
@@ -145,10 +158,10 @@ export default {
         for (const [key, value] of Object.entries(this.maintenanceTypes)) {
           arr.push(value.description);
         }
-        this.types = arr
+        this.types = arr;
       }
     });
-  },/* eslint-disable no-unused-vars */
+  } /* eslint-disable no-unused-vars */,
 };
 </script>
 

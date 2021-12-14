@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <app-bar @toggleDrawer="drawer = !drawer" />
 
     <v-navigation-drawer app v-model="drawer" clipped>
@@ -35,4 +35,10 @@ export default {
   },
 };
 </script>
+
+<style>
+  #app{
+    background-color: #EEEEEE;
+  }
+</style>
 

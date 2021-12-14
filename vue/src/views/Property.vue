@@ -4,7 +4,7 @@
       <v-progress-linear indeterminate color="cyan"></v-progress-linear>
     </div>
     <div v-else>
-      <v-container id="propertyBox">
+      <v-container id="propertyBox" style="background-color:white">
         <h1>{{ property.address }}</h1>
         <v-img
           :src="property.imageUrl"
@@ -25,10 +25,7 @@
           @click="navToUpdate(property.propertyId)"
           >Update</v-btn
         >
-        <v-btn class="ma-2" v-if="isAuthorized"
-          >Create Maintenance Request</v-btn
-        >
-        <request-maintenance-form :propertyId ="this.$route.params.id" v-if="isAuthorized"/>
+        <request-maintenance-form :propertyId ="this.$route.params.id" v-if="isAuthorized || isTenant"/>
       </v-container>
     </div>
   </div>
@@ -61,6 +58,13 @@ export default {
           this.$store.state.user.authorities[0].name === "ROLE_ADMIN")
       );
     },
+    isTenant() {
+      return (
+        this.$store.state.user.authorities &&
+        (this.$store.state.user.authorities[0].name === "ROLE_USER" &&
+          this.$store.state.user.id === this.property.propertyId)
+      );
+    }
   },
   created() {
     propertyService.getById(this.$route.params.id).then((response) => {

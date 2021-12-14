@@ -4,7 +4,7 @@
       <v-progress-linear indeterminate color="cyan"></v-progress-linear>
     </div>
     <div v-else>
-      <v-container id="updatePropertyBox">
+      <v-container id="updatePropertyBox" style="background-color:white">
         <h1>Update Property</h1>
         <v-form @submit.prevent="update" ref="form" class="mb-6">
           <v-text-field

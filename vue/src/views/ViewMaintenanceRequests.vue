@@ -11,16 +11,16 @@
         v-for="request in requests"
         :key="request.maintenanceRequestId"
       >
-        <v-card class="ma-6 blue-grey lighten-5" max width="344" elevation="2">
+        <v-card class="ma-6" max width="344" elevation="2">
           <v-card-text>
             <h2 class="mb-4">{{ request.address }}</h2>
-            <p>Requested: {{ request.timeStamp }}</p>
+            <p>Requested: {{ parseDate(request.timeStamp) }}</p>
             <p>Request Type: {{ request.description }}</p>
             <p>Comments: {{request.comments}}</p>
             <p>Contact Info: <ul><li>{{ request.name }}</li><li>{{ request.phone }}</li><li>{{ request.email }}</li></ul></p>
           </v-card-text>
           <v-card-actions>
-            <v-btn class="mx-auto mb-4 green lighten-2" @click="markComplete(request.maintenanceRequestId)">Mark As Complete</v-btn>
+            <v-btn class="mx-auto mb-4 secondary" @click="markComplete(request.maintenanceRequestId)">Mark As Complete</v-btn>
           </v-card-actions>
         </v-card>
       </div>
@@ -30,6 +30,9 @@
 
 <script>
 import maintenanceService from "../services/MaintenanceService";
+// import moment from 'moment';
+import moment from "moment";
+
 export default {
   name: "ViewMaintenanceRequests",
   data() {
@@ -56,7 +59,15 @@ export default {
   created() {
     this.get();
   },
+  computed: {
+    date() {
+      return moment(this.requests.timeStamp, "MM-DD-YYYY");
+    },
+  },
   methods: {
+    parseDate(string) {
+      return moment(string).format("DD MMM YYYY LT");
+    },
     get() {
       if (this.$store.state.user.id) {
         maintenanceService
@@ -67,20 +78,20 @@ export default {
             }
           });
       } else {
-        this.$router.push("/login"); 
+        this.$router.push("/login");
       }
     },
     markComplete(maintenanceRequestId) {
-        maintenanceService
-          .markAsCompleteByMaintenanceRequestId(maintenanceRequestId)
-          .then((response) => {
-            if (response.status === 200) {
-              this.get();
-            }
-          })
-          .catch((error) => {
-            console.log(error)
-          });
+      maintenanceService
+        .markAsCompleteByMaintenanceRequestId(maintenanceRequestId)
+        .then((response) => {
+          if (response.status === 200) {
+            this.get();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

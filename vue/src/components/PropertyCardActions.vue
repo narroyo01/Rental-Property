@@ -16,6 +16,7 @@
       <p class="ms-4 mt-4">Rent: ${{ property.rent }}</p>
     </div>
     <v-btn
+      color="secondary"
       class="ms-4 mb-4"
       v-if="isAuthorized"
       @click="navToUpdate(property.propertyId)"

@@ -1,5 +1,5 @@
 <template>
-  <v-simple-table v-if="isAuthorized">
+  <v-simple-table v-if="isAuthorized" style="background-color:#eeeeee">
     <thead>
       <tr>
         <th>Property</th>

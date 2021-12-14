@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" @submit.prevent="addProperty">
-    <v-container id="addPropertyBox">
+    <v-container id="addPropertyBox" style="background-color:white">
       <h1 class="h3 mb-3 font-weight-normal">Add Property</h1>
 
       <v-text-field
