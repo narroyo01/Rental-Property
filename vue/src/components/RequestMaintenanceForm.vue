@@ -1,6 +1,5 @@
 <template>
   <v-container id="form">
-    {{maintenanceTypes}}
     <v-form v-if="maintenanceTypes !== null" ref="form" @submit.prevent="submit">
       <h1 id="header">Maintenance Request Form</h1>
       <v-text-field

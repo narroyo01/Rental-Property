@@ -1,5 +1,6 @@
 <template>
   <v-list dense nav>
+    <v-list-item-group color="primary">
     <v-list-item
       v-for="nav in activeNavs"
       :key="nav.title"
@@ -13,6 +14,7 @@
         <v-list-item-title>{{ nav.title }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
+    </v-list-item-group>
   </v-list>
 </template>
 

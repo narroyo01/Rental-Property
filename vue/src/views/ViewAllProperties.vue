@@ -38,7 +38,6 @@
                   v-if="isAuthorized"
                   >Update</v-btn
                 >
-                <v-btn v-if="isAuthorized">Create Maintenance Request</v-btn>
               </td>
             </tr>
           </tbody>

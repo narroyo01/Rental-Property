@@ -4,7 +4,7 @@
       <v-progress-linear indeterminate color="cyan"></v-progress-linear>
     </div>
     <div v-else>
-      <h1 class="text-center">Welcome to ? Property Management</h1>
+      <h1 class="text-center">Welcome to Waystone Property Management</h1>
       <h2 class="text-center">Featured Available Properties:</h2>
       <property-card
         v-for="property in properties"
