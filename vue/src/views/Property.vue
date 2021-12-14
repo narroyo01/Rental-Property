@@ -29,7 +29,6 @@
           >Create Maintenance Request</v-btn
         >
         <request-maintenance-form :propertyId ="this.$route.params.id" v-if="isAuthorized"/>
-        <inquiry-form/>
       </v-container>
     </div>
   </div>
