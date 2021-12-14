@@ -15,7 +15,7 @@
         <td>{{transaction.timeDue}}</td>
         <td v-bind:class="{green: transaction.status == 'paid'}" v-if=" transaction.status == 'paid'">{{transaction.status}}</td>
         <td v-bind:class="{yellow: transaction.status == 'due'}" v-if="transaction.status == 'due'">{{transaction.status}}</td>
-        <td v-bind:class="{yellow: transaction.status == 'overdue'}" v-if="transaction.status == 'overdue'">{{transaction.status}}</td>
+        <td v-bind:class="{red: transaction.status == 'overdue'}" v-if="transaction.status == 'overdue'">{{transaction.status}}</td>
       </tr>
     </tbody>
   </v-simple-table>
