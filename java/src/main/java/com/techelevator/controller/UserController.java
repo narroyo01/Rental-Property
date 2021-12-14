@@ -14,7 +14,7 @@ public class UserController {
     @Autowired
     JdbcUserDao jdbcUserDao;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LANDLORD')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LANDLORD', 'ROLE_MAINTENANCE')")
     @GetMapping("/user")
     public ResponseEntity<?> get(@RequestParam(name = "role") String role) {
         return new ResponseEntity<>(jdbcUserDao.getUsersByRole(role), HttpStatus.OK);

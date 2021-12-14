@@ -34,6 +34,7 @@ export default {
         { title: "My Maintenance Tasks", icon: "mdi-account-hard-hat", to: "/maintenance-request" },
    //     { title: "Admin Portal", icon: "mdi-shield-account", to: "/login" },
         { title: "Add Property", icon: "mdi-home-group-plus", to: "/add-property"},
+        {title: "Assign Technician", icon: "mdi-clipboard-account-outline", to: "/maintenance-request/assign"},
         { title: "Login", icon: "mdi-login", to: "/login" },
       ],
     };
@@ -57,6 +58,14 @@ export default {
           return false;
         } else if (nav.title === "My Maintenance Tasks" && this.$store.state.user.username) {
           if (! (this.$store.state.user.authorities[0].name === "ROLE_MAINTENANCE" )) {
+            return false;
+          }
+        }
+
+        if(nav.title === "Assign Technician" && !this.$store.state.user.username){
+          return false;
+        }else if (nav.title === "Assign Technician" && this.$store.state.user.username){
+           if (! (this.$store.state.user.authorities[0].name === "ROLE_ADMIN" || this.$store.state.user.authorities[0].name === "ROLE_LANDLORD" || this.$store.state.user.authorities[0].name === "ROLE_MAINTENANCE")) {
             return false;
           }
         }

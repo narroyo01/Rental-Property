@@ -39,13 +39,16 @@ public class MaintenanceRequestController {
         return new ResponseEntity<>(jdbcMaintenanceRequestDao.getTypes(),HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_MAINTENANCE', 'ROLE_ADMIN', 'ROLE_LANDLORD')")
     @PostMapping("/maintenance-request/{maintenanceRequestId}/assign/{technicianId}")
-    public ResponseEntity<?> assignTechnician(@PathVariable int maintenanceId, @PathVariable int technicianId){
-        jdbcMaintenanceRequestDao.assignTechnician(maintenanceId,technicianId);
+    public ResponseEntity<?> assignTechnician(@PathVariable int maintenanceRequestId, @PathVariable int technicianId){
+        jdbcMaintenanceRequestDao.assignTechnician(maintenanceRequestId,technicianId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-     @PostMapping("/maintenance-request/open")
+
+    @PreAuthorize("hasAnyRole('ROLE_MAINTENANCE', 'ROLE_ADMIN', 'ROLE_LANDLORD')")
+    @GetMapping("/maintenance-request/open")
     public ResponseEntity<?>getOpenMaintenanceRequests() {
         return new ResponseEntity<>(jdbcMaintenanceRequestDao.getOpenMaintenanceRequests(), HttpStatus.OK);
     }

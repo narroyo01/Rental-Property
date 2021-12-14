@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import AddProperty from '../views/AddProperty.vue'
 import store from '../store/index'
 import ViewMaintenanceRequests from '../views/ViewMaintenanceRequests.vue'
+import AssignMaintenanceRequests from '../views/AssignMaintenanceRequests.vue'
 import ViewAllProperties from '../views/ViewAllProperties.vue'
 import UpdateProperty from '../views/UpdateProperty.vue'
 import Property from '../views/Property.vue'
@@ -97,6 +98,14 @@ const router = new Router({
       component: ViewAllProperties,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path: "/maintenance-request/assign",
+      name: "assign-maintenance-requests",
+      component: AssignMaintenanceRequests,
+      meta: {
+        requiresAuth: true
       }
     }
   ]
