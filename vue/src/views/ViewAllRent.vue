@@ -13,7 +13,9 @@
         <td>{{transaction.propertyId}}</td>
         <td>{{transaction.address}}</td>
         <td>{{transaction.timeDue}}</td>
-        <td>{{transaction.status}}</td>
+        <td v-bind:class="{green: transaction.status == 'paid'}" v-if=" transaction.status == 'paid'">{{transaction.status}}</td>
+        <td v-bind:class="{yellow: transaction.status == 'due'}" v-if="transaction.status == 'due'">{{transaction.status}}</td>
+        <td v-bind:class="{yellow: transaction.status == 'overdue'}" v-if="transaction.status == 'overdue'">{{transaction.status}}</td>
       </tr>
     </tbody>
   </v-simple-table>
@@ -27,6 +29,7 @@ export default {
   data() {
     return {
       transactions: null,
+      color: null,
     };
   },
   created() {
@@ -44,6 +47,20 @@ export default {
           this.$store.state.user.authorities[0].name === "ROLE_ADMIN")
       );
     },
-  }
+  },
 };
 </script>
+
+<style scoped>
+.green{
+  background-color: green;
+}
+
+.yellow{
+  background-color: yellow;
+}
+
+.red{
+  background-color: red;
+}
+</style>
