@@ -72,7 +72,7 @@ public class JdbcMaintenanceRequestDao implements MaintenanceRequestDao {
     @Override
     public List<MaintenanceRequest> getOpenMaintenanceRequests() {
         List<MaintenanceRequest> maintenanceRequests = new ArrayList<>();
-        String sql = "SELECT * FROM maintenance_request WHERE technician_id is null ; ";
+        String sql = "SELECT maintenance_request_id, m.property_id, type_id, technician_id, requester_id, time_stamp, is_complete, email, phone, name, comments, address, t.description FROM maintenance_request m JOIN property p ON p.property_id = m.property_id JOIN maintenance_type t ON m.type_id = t.maintenance_type_id WHERE technician_id is null ; ";
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
         while(sqlRowSet.next()){
             maintenanceRequests.add(mapRowToMaintenanceRequest(sqlRowSet));
@@ -94,6 +94,8 @@ public class JdbcMaintenanceRequestDao implements MaintenanceRequestDao {
         maintenanceRequest.setPhone(sqlRowSet.getString("phone"));
         maintenanceRequest.setName(sqlRowSet.getString("name"));
         maintenanceRequest.setComments(sqlRowSet.getString("comments"));
+        maintenanceRequest.setAddress(sqlRowSet.getString("address"));
+        maintenanceRequest.setDescription(sqlRowSet.getString("description"));
         return maintenanceRequest;
     }
 }

@@ -1,18 +1,20 @@
-<template>
+<template >
   <v-list dense nav>
-    <v-list-item
-      v-for="nav in activeNavs"
-      :key="nav.title"
-      link
-      @click="navTo(nav.to)"
-    >
-      <v-list-item-icon>
-        <v-icon>{{ nav.icon }}</v-icon>
-      </v-list-item-icon>
-      <v-list-item-content>
-        <v-list-item-title>{{ nav.title }}</v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
+    <v-list-item-group color="primary">
+      <v-list-item
+        v-for="nav in activeNavs"
+        :key="nav.title"
+        link
+        @click="navTo(nav.to)"
+      >
+        <v-list-item-icon>
+          <v-icon>{{ nav.icon }}</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>{{ nav.title }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list-item-group>
   </v-list>
 </template>
 
@@ -22,59 +24,112 @@ export default {
   data() {
     return {
       property: {
-        propertyId: ""
+        propertyId: "",
       },
       navs: [
         { title: "Properties", icon: "mdi-home-group", to: "/property" },
+        // {
+        //   title: "Request Maintenance",
+        //   icon: "mdi-account-wrench",
+        //   to: "/login",
+        // },
         {
-          title: "Request Maintenance",
-          icon: "mdi-account-wrench",
-          to: "/login",
+          title: "My Maintenance Tasks",
+          icon: "mdi-account-hard-hat",
+          to: "/maintenance-request",
         },
-        { title: "My Maintenance Tasks", icon: "mdi-account-hard-hat", to: "/maintenance-request" },
-   //     { title: "Admin Portal", icon: "mdi-shield-account", to: "/login" },
-        { title: "Add Property", icon: "mdi-home-group-plus", to: "/add-property"},
-        {title: "Assign Technician", icon: "mdi-clipboard-account-outline", to: "/maintenance-request/assign"},
+        //     { title: "Admin Portal", icon: "mdi-shield-account", to: "/login" },
+        {
+          title: "Add Property",
+          icon: "mdi-home-group-plus",
+          to: "/add-property",
+        },
+        {
+          title: "Assign Technician",
+          icon: "mdi-clipboard-account-outline",
+          to: "/maintenance-request/assign",
+        },
         { title: "Login", icon: "mdi-login", to: "/login" },
-        {title: "View Rent", icon: "mdi-currency-usd", to: "/transaction"}
+        { title: "View Rent", icon: "mdi-currency-usd", to: "/transaction" },
       ],
     };
   },
   computed: {
     activeNavs() {
       return this.navs.filter((nav) => {
-        if (nav.title === "Login" && this.$store.state.user.username) return false;
-        
-        if (nav.title === "Request Maintenance" && !this.$store.state.user.username) return false;
-
-        if (nav.title === "Add Property" && ! this.$store.state.user.username) {
+        if (nav.title === "Login" && this.$store.state.user.username)
           return false;
-        } else if (nav.title === "Add Property" && this.$store.state.user.username) {
-          if (! (this.$store.state.user.authorities[0].name === "ROLE_ADMIN" || this.$store.state.user.authorities[0].name === "ROLE_LANDLORD")) {
+
+        if (
+          nav.title === "Request Maintenance" &&
+          !this.$store.state.user.username
+        )
+          return false;
+
+        if (nav.title === "Add Property" && !this.$store.state.user.username) {
+          return false;
+        } else if (
+          nav.title === "Add Property" &&
+          this.$store.state.user.username
+        ) {
+          if (
+            !(
+              this.$store.state.user.authorities[0].name === "ROLE_ADMIN" ||
+              this.$store.state.user.authorities[0].name === "ROLE_LANDLORD"
+            )
+          ) {
             return false;
           }
         }
 
-        if (nav.title === "View Rent" && ! this.$store.state.user.username) {
+        if (nav.title === "View Rent" && !this.$store.state.user.username) {
           return false;
-        } else if (nav.title === "View Rent" && this.$store.state.user.username) {
-          if (! (this.$store.state.user.authorities[0].name === "ROLE_ADMIN" || this.$store.state.user.authorities[0].name === "ROLE_LANDLORD")) {
+        } else if (
+          nav.title === "View Rent" &&
+          this.$store.state.user.username
+        ) {
+          if (
+            !(
+              this.$store.state.user.authorities[0].name === "ROLE_ADMIN" ||
+              this.$store.state.user.authorities[0].name === "ROLE_LANDLORD"
+            )
+          ) {
             return false;
           }
         }
 
-        if (nav.title === "My Maintenance Tasks" && ! this.$store.state.user.username) {
+        if (
+          nav.title === "My Maintenance Tasks" &&
+          !this.$store.state.user.username
+        ) {
           return false;
-        } else if (nav.title === "My Maintenance Tasks" && this.$store.state.user.username) {
-          if (! (this.$store.state.user.authorities[0].name === "ROLE_MAINTENANCE" )) {
+        } else if (
+          nav.title === "My Maintenance Tasks" &&
+          this.$store.state.user.username
+        ) {
+          if (
+            !(this.$store.state.user.authorities[0].name === "ROLE_MAINTENANCE")
+          ) {
             return false;
           }
         }
 
-        if(nav.title === "Assign Technician" && !this.$store.state.user.username){
+        if (
+          nav.title === "Assign Technician" &&
+          !this.$store.state.user.username
+        ) {
           return false;
-        }else if (nav.title === "Assign Technician" && this.$store.state.user.username){
-           if (! (this.$store.state.user.authorities[0].name === "ROLE_ADMIN" || this.$store.state.user.authorities[0].name === "ROLE_LANDLORD" || this.$store.state.user.authorities[0].name === "ROLE_MAINTENANCE")) {
+        } else if (
+          nav.title === "Assign Technician" &&
+          this.$store.state.user.username
+        ) {
+          if (
+            !(
+              this.$store.state.user.authorities[0].name === "ROLE_ADMIN" ||
+              this.$store.state.user.authorities[0].name === "ROLE_LANDLORD" ||
+              this.$store.state.user.authorities[0].name === "ROLE_MAINTENANCE"
+            )
+          ) {
             return false;
           }
         }
@@ -92,3 +147,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

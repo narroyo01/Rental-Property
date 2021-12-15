@@ -1,44 +1,45 @@
 <template>
-  <v-app-bar app clipped-left>
-    <v-app-bar-nav-icon @click="$emit('toggleDrawer')"></v-app-bar-nav-icon>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title class="text-h6">
-          <span
-            @click="navHome()"
-            style="display: inline-block; cursor: pointer"
-            >Rental Property</span
-          >
-        </v-list-item-title>
-        <v-list-item-subtitle @click="navHome()">
-          <span
-            @click="navHome()"
-            style="display: inline-block; cursor: pointer"
-            >Manager</span
-          >
-        </v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item />
-    <v-menu v-if="$store.state.user.username" left bottom>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn text v-bind="attrs" v-on="on">
-          {{ $store.state.user.username }} {{ role }}
-        </v-btn>
-      </template>
+  <v-app-bar app clipped-left color="teal darken-3">
+      <v-app-bar-nav-icon color="grey lighten-5" @click="$emit('toggleDrawer')"></v-app-bar-nav-icon>
+      <v-list-item class="grey--text text--lighten-5">
+        <v-list-item-content >
+          <v-list-item-title class="text-h6">
+            <span
+              @click="navHome()"
+              style="display: inline-block; cursor: pointer"
+              >Waystone</span
+            >
+          </v-list-item-title>
+          <v-list-item-subtitle class="grey--text text--lighten-5" @click="navHome()">
+            <span
+              @click="navHome()"
+              style="display: inline-block; cursor: pointer"
+              > Rental Property Manager</span
+            >
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item />
+      <v-menu v-if="$store.state.user.username" left bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="grey--text text--lighten-5" text v-bind="attrs" v-on="on">
+            {{ $store.state.user.username }} {{ role }}
+          </v-btn>
+        </template>
 
-      <v-list>
-        <v-list-item
-          @click="
-            () => {
-              this.$router.push('/logout');
-            }
-          "
-        >
-          <v-list-item-title>Logout</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+        <v-list>
+          <v-list-item
+            @click="
+              () => {
+                this.$router.push('/logout');
+              }
+            "
+          >
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
   </v-app-bar>
 </template>
 
@@ -63,3 +64,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

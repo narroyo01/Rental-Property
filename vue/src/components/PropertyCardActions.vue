@@ -1,5 +1,5 @@
 <template>
-  <v-card width="374" style="cursor:pointer">
+  <v-card width="374" height="700" style="cursor: pointer">
     <div @click="nav()">
       <v-img height="250" :src="property.imageUrl"></v-img>
 
@@ -9,17 +9,19 @@
         {{ property.available ? "Available" : "Occupied" }}
       </p>
 
-      <p class="ms-4">{{ property.description }}</p>
+      <div class="ms-4 me-2 overflow-y-auto" style="height: 240px">
+        <p class="ms-4">{{ property.description }}</p>
+      </div>
 
-      <p class="ms-4">Rent: ${{ property.rent }}</p>
+      <p class="ms-4 mt-4">Rent: ${{ property.rent }}</p>
     </div>
     <v-btn
-      class="ma-2"
+      color="secondary"
+      class="ms-4 mb-4"
       v-if="isAuthorized"
       @click="navToUpdate(property.propertyId)"
       >Update</v-btn
     >
-    <v-btn class="ma-2" v-if="isAuthorized">Create Maintenance Request</v-btn>
   </v-card>
 </template>
 
