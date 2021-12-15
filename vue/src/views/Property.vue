@@ -26,6 +26,8 @@
           >Update</v-btn
         >
         <request-maintenance-form :propertyId ="this.$route.params.id" v-if="isAuthorized || isTenant"/>
+
+        <contact-form v-if="!this.$store.state.user.username"/>
       </v-container>
     </div>
   </div>
@@ -34,11 +36,13 @@
 <script>
 import propertyService from "../services/PropertyService";
 import RequestMaintenanceForm from "../components/RequestMaintenanceForm.vue";
+import ContactForm from '../components/ContactForm.vue';
 
 export default {
   name: "Property",
   components: {
     RequestMaintenanceForm,
+    ContactForm,
   },
   data() {
     return {

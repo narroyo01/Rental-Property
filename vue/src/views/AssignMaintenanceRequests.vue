@@ -6,7 +6,7 @@
     <div v-else>
       <h1 class="text-center">Maintenance Requests</h1>{{technicianObject}}
       <div
-        style="display: inline-block"
+        style="display: inline-block; vertical-align: top"
         v-for="request in requests"
         :key="request.maintenanceRequestId"
       >
