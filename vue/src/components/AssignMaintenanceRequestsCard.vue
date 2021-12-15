@@ -9,7 +9,7 @@
     </v-card-text>
     <v-card-actions style= "flex-direction: column; align-items:stretch;" v-if="data.technicians">
       <div style="">
-        <v-select :items="data.technicians" label="Select Technician" outlined v-model="technician" ></v-select>
+        <v-autocomplete :items="data.technicians" label="Select Technician" outlined v-model="technician" ></v-autocomplete>
       </div>
       <v-btn color="primary" class="mx-auto mb-4" @click="$emit('assignTechnician',{id:data.request.maintenanceRequestId,technician:technician})">Assign Technician</v-btn>
     </v-card-actions>

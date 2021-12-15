@@ -37,12 +37,9 @@
         label="Description"
         v-model="request.comments"
       ></v-textarea>
-      <v-alert
-        class="my-4"
-        type="success"
-        v-if="success"
-      >
-        Maintenance Request submitted successfully, a technician will be in touch as soon as possible.
+      <v-alert class="my-4" type="success" v-if="success">
+        Maintenance Request submitted successfully, a technician will be in
+        touch as soon as possible.
       </v-alert>
       <v-btn class="mt-4" elevation="2" color="primary" type="submit"
         >Submit</v-btn
@@ -85,13 +82,10 @@ export default {
         (value) => (value || "").length > 2 || "Min 3 characters",
       ],
       rulesPhone: [(value) => !!value || "Required"],
-      rulesEmail: [
-        (value) => !!value || "Required",
-        //(value) => this.validateEmail(value) || "Invalid Email",
-      ],
+      rulesEmail: [(value) => !!value || "Required"],
       rulesDescription: [
         (value) => !!value || "Required",
-        (value) => (value || "").length <= 150 || "Max 150 characters",
+        (value) => (value || "").length <= 1000 || "Max 1000 characters",
         (value) => (value || "").length > 20 || "Min 20 characters",
       ],
       rulesSelect: [(value) => !!value || "Required"],

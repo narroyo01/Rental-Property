@@ -1,5 +1,5 @@
 <template>
-  <v-card width="374" height="700" style="cursor: pointer">
+  <v-card width="374" :height="isAuthorized ? 700 : 610" style="cursor: pointer">
     <div @click="nav()">
       <v-img height="250" :src="property.imageUrl"></v-img>
 
@@ -25,7 +25,7 @@
   </v-card>
 </template>
 
-<script>
+<script> 
 export default {
   name: "PropertyCardActions",
   props: ["property"],

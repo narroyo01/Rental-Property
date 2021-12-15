@@ -6,7 +6,7 @@
       <v-progress-linear indeterminate color="cyan"></v-progress-linear>
     </div>
     <div v-else>
-      <v-select :items="usernames" v-model="selectedUser"></v-select>
+      <v-autocomplete :items="usernames" v-model="selectedUser"></v-autocomplete>
     </div>
     <v-btn color="primary" elevation="2" type="submit">Assign</v-btn>
   </v-form>
