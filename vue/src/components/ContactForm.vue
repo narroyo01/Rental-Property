@@ -2,6 +2,14 @@
   <div>
     <v-form ref="form" @submit.prevent="submitContactForm">
       <h3>Contact Us About This Property:</h3>
+
+      <v-text-field
+        label="Name"
+        :loading="loading"
+        :rules="rulesName"
+        v-model="contactForm.name"
+      ></v-text-field>
+
       <v-text-field
         label="Email Address"
         :loading="loading"
@@ -41,9 +49,13 @@ export default {
     return {
       loading: false,
       success: false,
+      reulesName:[
+         (value) => !!value || "Required",
+        (value) => (value || "").length <= 50 || "Max 50 characters",
+      ],
       rulesEmail: [
         (value) => !!value || "Required",
-        (value) => (value || "").length <= 300 || "Max 100 characters",
+        (value) => (value || "").length <= 100 || "Max 100 characters",
       ],
       rulesPhone: [
         (value) => !!value || "Required",
@@ -53,7 +65,9 @@ export default {
         (value) => !!value || "Required",
         (value) => (value || "").length <= 300 || "Max 300 characters",
       ],
+    
       contactForm: {
+        name:"",
         email: "",
         phone: "",
         message: "",
