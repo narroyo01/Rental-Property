@@ -78,6 +78,7 @@ CREATE TABLE property (
 
 CREATE TABLE inquiry (
         inquiry_id INT DEFAULT nextval('seq_inquiry_id'::regclass),
+        name VARCHAR(100),
         email VARCHAR(100),
         phone VARCHAR(20),
         message VARCHAR(300),
@@ -139,10 +140,11 @@ INSERT INTO property (address, rent, is_available, image_url, description) VALUE
 INSERT INTO property (address, rent, is_available, image_url, description) VALUES ('12 Court Ct', 2200, true, 'https://www.familyhomeplans.com/varnish-images/plans/56705/56705-b600.jpg', 'A wonderful two-story home in the Dublin Schools! Freshly painted, hardwood floors, newer carpet, with a great open-concept kitchen/living area featuring quartz counters and stainless steel appliances, spacious bedrooms, a finished lower level, and ample storage. The home also has wonderful outdoor space - all in an established neighborhood near to all that the Dublin area has to offer: from great public spaces, fantastic entertaining districts, and highway access.');
 
 
-INSERT INTO inquiry (email, phone, message, property_id) VALUES ('someone@yahoo.com', '123-456-7890', 'I am intersted in renting this apartment', 1);
+INSERT INTO inquiry (name, email, phone, message, property_id) VALUES 
+('John Smith', 'someone@yahoo.com', '123-456-7890', 'I am intersted in renting this apartment', 1), ('Ashley Brown', 'somebody@gmail.com', '098-765-4321', 'This condo looks lovely and has my interest', 3), ('Henrique Heranandez', 'hhernandez@hotmail.com', '321-654-0987', 'This place looks nice and is in my price range, would love tot alk more about it', 5);
 
 INSERT INTO transactions (time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id)
-VALUES ('10/1/2021', '11/1/2021', 1400, 1400, 4, 8);
+VALUES ('10/1/2021', '11/1/2021', 1400, 1400, 4, 8), ('11/1/2021', '12/2/2021', 1560, 1560, 2, 7);
 
 INSERT INTO transactions (time_initiated, amount_due, property_id, tenant_id)
 VALUES ('10/1/2021', 900, 5, 9);
