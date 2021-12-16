@@ -49,7 +49,7 @@ export default {
     return {
       loading: false,
       success: false,
-      reulesName:[
+      rulesName:[
          (value) => !!value || "Required",
         (value) => (value || "").length <= 50 || "Max 50 characters",
       ],
