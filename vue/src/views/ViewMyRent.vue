@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    <h2 v-if="ledgers.length < 1">You have no available transactions.</h2>
+    <h1 class="text-center">Renter Dashboard</h1>
+    <!-- <h2 v-if="ledgers.length && ledgers.length < 1">You have no available transactions.</h2> -->
     <v-tabs background-color="grey lighten-3" v-model="tab">
       <v-tab v-for="ledger in ledgers" :key="ledger.id">
         {{ ledger.address }}
@@ -12,38 +13,46 @@
         v-for="ledger in ledgers"
         :key="ledger.id"
       >
-        <v-simple-table style="background-color: #eeeeee" v-if="isAuthorized">
-          <thead>
-            <tr>
-              <th>Date Posted</th>
-              <th>Date Due</th>
-              <th>Rent</th>
-              <th>Amount Paid</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="transaction in ledger.ledger" :key="transaction.id">
-              <td>
-                {{ parseDate(transaction.timeInitiated) }}
-              </td>
-              <td>
-                {{ transaction.timeDue }}
-              </td>
-              <td>${{ transaction.amountDue }}</td>
-              <td>${{ transaction.amountPaid }}</td>
-              <td>
-                <v-btn
-                  color="primary"
-                  v-if="transaction.amountPaid < transaction.amountDue"
-                  @click="payRent(transaction)"
-                >
-                  PAY
-                </v-btn>
-              </td>
-            </tr>
-          </tbody>
-        </v-simple-table>
+        <v-container>
+          <h2 class="mt-8">Ledger</h2>
+          <v-simple-table
+            class="mb-8"
+            style="background-color: #eeeeee"
+            v-if="isAuthorized"
+          >
+            <thead>
+              <tr>
+                <th>Date Posted</th>
+                <th>Date Due</th>
+                <th>Rent</th>
+                <th>Amount Paid</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="transaction in ledger.ledger" :key="transaction.id">
+                <td>
+                  {{ parseDate(transaction.timeInitiated) }}
+                </td>
+                <td>
+                  {{ transaction.timeDue }}
+                </td>
+                <td>${{ transaction.amountDue }}</td>
+                <td>${{ transaction.amountPaid }}</td>
+                <td>
+                  <v-btn
+                    color="primary"
+                    v-if="transaction.amountPaid < transaction.amountDue"
+                    @click="payRent(transaction)"
+                  >
+                    PAY
+                  </v-btn>
+                </td>
+              </tr>
+            </tbody>
+          </v-simple-table>
+          <request-maintenance-form :propertyId="ledger.ledger[0].propertyId" />
+        </v-container>
       </v-tab-item>
     </v-tabs-items>
 
@@ -67,11 +76,7 @@
             type="number"
           >
           </v-text-field>
-          <v-alert 
-          class="mt-6"
-          type="success"
-          v-if="success"
-          >
+          <v-alert class="mt-6" type="success" v-if="success">
             Payment Successful!
           </v-alert>
         </v-card-text>
@@ -81,9 +86,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="danger" text @click="dialog = false"> Cancel </v-btn>
-          <v-btn color="primary" text @click="pay()">
-            Submit Payment
-          </v-btn>
+          <v-btn color="primary" text @click="pay()"> Submit Payment </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -91,9 +94,12 @@
 </template>
 
 <script>
+import RequestMaintenanceForm from "../components/RequestMaintenanceForm.vue";
 import transactionService from "../services/TransactionService";
 import moment from "moment";
+
 export default {
+  components: { RequestMaintenanceForm },
   name: "ViewMyRent",
   data() {
     return {
@@ -111,7 +117,7 @@ export default {
     if (!this.$store.state.user.id) {
       return;
     }
-    this.get()
+    this.get();
   },
   computed: {
     isAuthorized() {
@@ -129,20 +135,24 @@ export default {
       this.selectedTransaction = transaction;
     },
     pay() {
-      transactionService.payRent(this.selectedTransaction.transactionId, this.paymentAmount).then((response)=>{
-        if(response.status===200) {
-          this.success = true;
-          this.get();
-        }
-      })
+      transactionService
+        .payRent(this.selectedTransaction.transactionId, this.paymentAmount)
+        .then((response) => {
+          if (response.status === 200) {
+            this.success = true;
+            this.get();
+          }
+        });
     },
     get() {
-      transactionService.getMyRent(this.$store.state.user.id).then((response) => {
-      if (response.status === 200) {
-        this.ledgers = response.data;
-      }
-    });
-    }
+      transactionService
+        .getMyRent(this.$store.state.user.id)
+        .then((response) => {
+          if (response.status === 200) {
+            this.ledgers = response.data;
+          }
+        });
+    },
   },
 };
 </script>

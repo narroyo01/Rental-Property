@@ -120,8 +120,8 @@ const router = new Router({
       }
     },
     {
-      path: "/transaction/view",
-      name: "my-rent",
+      path: "/dashboard",
+      name: "dashboard",
       component: ViewMyRent,
       meta: {
         requiresAuth: true
