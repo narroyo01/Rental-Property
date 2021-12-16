@@ -9,6 +9,7 @@
         :loading="loading"
         :rules="rulesName"
         v-model="contactForm.name"
+        v-on:click="reset"
       ></v-text-field>
 
       <v-text-field
@@ -16,6 +17,7 @@
         :loading="loading"
         :rules="rulesEmail"
         v-model="contactForm.email"
+        v-on:click="reset"
       ></v-text-field>
 
       <v-text-field
@@ -23,6 +25,7 @@
         :loading="loading"
         :rules="rulesPhone"
         v-model="contactForm.phone"
+        v-on:click="reset"
       ></v-text-field>
 
       <v-textarea
@@ -30,6 +33,7 @@
         :loading="loading"
         :rules="rulesMessage"
         v-model="contactForm.message"
+        v-on:click="reset"
       ></v-textarea>
       <v-alert class="mt-6" type="success" v-if="success">
         Message sent! We'll be in touch soon.
@@ -96,6 +100,9 @@ export default {
         .catch(() => {
           this.loading = false;
         });
+    },
+    reset(){
+      this.success = false;
     },
   },
 };
