@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LANDLORD')")
-    @PutMapping("/user/update")
+    @PutMapping("/user")
     public ResponseEntity<?> update(@RequestBody User user) {
         jdbcUserDao.updateUser(user.getId(), user);
         return new ResponseEntity<>(HttpStatus.OK);
