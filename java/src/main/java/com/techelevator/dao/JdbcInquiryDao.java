@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.model.Inquiry;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+@Service
 public class JdbcInquiryDao implements  InquiryDao {
 
     private JdbcTemplate jdbcTemplate;
