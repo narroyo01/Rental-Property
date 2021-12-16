@@ -6,15 +6,15 @@ public class Inquiry {
     private String email;
     private String phone;
     private String message;
-    private Integer property;
+    private Integer propertyId;
 
-    public Inquiry(Long id, String name, String email, String phone, String message, Integer property) {
+    public Inquiry(Long id, String name, String email, String phone, String message, Integer propertyId) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.message = message;
-        this.property = property;
+        this.propertyId = propertyId;
     }
 
     public Inquiry() {
@@ -60,11 +60,11 @@ public class Inquiry {
         this.message = message;
     }
 
-    public Integer getProperty() {
-        return property;
+    public Integer getPropertyId() {
+        return propertyId;
     }
 
-    public void setProperty(Integer property) {
-        this.property = property;
+    public void setPropertyId(Integer propertyId) {
+        this.propertyId = propertyId;
     }
 }

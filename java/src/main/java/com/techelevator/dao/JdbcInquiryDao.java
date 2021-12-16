@@ -16,6 +16,6 @@ public class JdbcInquiryDao implements  InquiryDao {
     public void createInquiry(Inquiry inquiry) {
         String sql = "INSERT INTO inquiry (name, email, phone, message, property_id)" +
                 "VALUES ( ?, ?, ?, ?, ?) ;";
-        jdbcTemplate.update(sql,inquiry);
+        jdbcTemplate.update(sql,inquiry.getName(), inquiry.getEmail(), inquiry.getPhone(), inquiry.getMessage(), inquiry.getPropertyId());
     }
 }
