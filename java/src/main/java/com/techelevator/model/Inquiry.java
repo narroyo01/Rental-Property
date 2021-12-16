@@ -1,11 +1,15 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Inquiry {
+    @JsonIgnore
     private Long id;
     private String name;
     private String email;
     private String phone;
     private String message;
+    @JsonIgnore
     private Integer propertyId;
 
     public Inquiry(Long id, String name, String email, String phone, String message, Integer propertyId) {

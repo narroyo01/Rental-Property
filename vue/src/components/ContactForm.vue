@@ -87,10 +87,10 @@ export default {
           if (response.status == 201) {
             this.success = true;
             this.loading = false;
-            this.name = "";
-            this.email = "";
-            this.phone = "";
-            this.message = "";
+            this.contactForm.name = "";
+            this.contactForm.email = "";
+            this.contactForm.phone = "";
+            this.contactForm.message = "";
           }
         })
         .catch(() => {
