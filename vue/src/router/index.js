@@ -12,6 +12,7 @@ import ViewAllProperties from '../views/ViewAllProperties.vue'
 import UpdateProperty from '../views/UpdateProperty.vue'
 import Property from '../views/Property.vue'
 import ViewAllRent from '../views/ViewAllRent.vue'
+import ViewMyRent from '../views/ViewMyRent.vue'
 
 
 Vue.use(Router)
@@ -113,6 +114,14 @@ const router = new Router({
       path: "/transaction",
       name: "rent",
       component: ViewAllRent,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/transaction/view",
+      name: "my-rent",
+      component: ViewMyRent,
       meta: {
         requiresAuth: true
       }

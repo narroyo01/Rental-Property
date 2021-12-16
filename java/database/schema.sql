@@ -146,8 +146,8 @@ INSERT INTO inquiry (name, email, phone, message, property_id) VALUES
 INSERT INTO transactions (time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id)
 VALUES ('10/1/2021', '11/1/2021', 1400, 1400, 4, 8), ('11/1/2021', '12/2/2021', 1560, 1560, 2, 7);
 
-INSERT INTO transactions (time_initiated, amount_due, property_id, tenant_id)
-VALUES ('10/1/2021', 900, 5, 9);
+INSERT INTO transactions (time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id)
+VALUES ('10/1/2021', '10/1/2021',  900, 0, 5, 9), ('11/1/2021', '11/1/2021', 900, 0, 5, 9);
 
 INSERT INTO transactions (time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id)
 VALUES ('10/1/2021', '11/10/2021', 1000, 500, 1, 2);
