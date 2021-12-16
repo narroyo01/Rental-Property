@@ -1,8 +1,11 @@
 <template>
-  <v-card width="374" :height="isAuthorized ? 700 : 610" style="cursor: pointer">
-    <div @click="nav()">
-      <v-img height="250" :src="property.imageUrl"></v-img>
-
+  <v-card
+    width="374"
+    :height="isAuthorized ? 700 : 610"
+    style="cursor: pointer"
+  >
+    <v-img @click="nav()" height="250" :src="property.imageUrl"></v-img>
+    <span @click="nav()">
       <v-card-title>{{ property.address }}</v-card-title>
 
       <p class="ms-4" v-if="isAuthorized">
@@ -14,7 +17,7 @@
       </div>
 
       <p class="ms-4 mt-4">Rent: ${{ property.rent }}</p>
-    </div>
+    </span>
     <v-btn
       color="secondary"
       class="ms-4 mb-4"
@@ -25,7 +28,7 @@
   </v-card>
 </template>
 
-<script> 
+<script>
 export default {
   name: "PropertyCardActions",
   props: ["property"],

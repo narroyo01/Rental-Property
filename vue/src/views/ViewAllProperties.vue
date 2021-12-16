@@ -1,21 +1,23 @@
 <template >
-<div class="mx-4">
-    <v-tabs v-model="tab" background-color="grey lighten-3" >
+  <div class="mx-4">
+    <v-tabs v-model="tab" background-color="grey lighten-3">
       <v-tab>Detail View</v-tab>
       <v-tab>List View</v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
-      <v-tab-item style="background-color:#eeeeee"> 
-        <property-card-actions
-          v-for="property in properties"
-          :key="property.propertyId"
-          :property="property"
-          style="display: inline-block; vertical-align: top"
-          class="mx-6 my-12"
-        />
+      <v-tab-item style="background-color: #eeeeee">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center">
+          <property-card-actions
+            v-for="property in properties"
+            :key="property.propertyId"
+            :property="property"
+            style="display: inline-block; vertical-align: top"
+            class="mx-6 my-6"
+          />
+        </div>
       </v-tab-item>
-      <v-tab-item >
-        <v-simple-table style="background-color:#eeeeee">
+      <v-tab-item>
+        <v-simple-table style="background-color: #eeeeee">
           <thead>
             <tr>
               <th class="text-left">Address</th>
@@ -26,7 +28,11 @@
           </thead>
           <tbody>
             <tr v-for="property in properties" :key="property.propertyId">
-              <td><router-link :to="'/property/' + property.propertyId"> {{ property.address }} </router-link></td>
+              <td>
+                <router-link :to="'/property/' + property.propertyId">
+                  {{ property.address }}
+                </router-link>
+              </td>
               <td>${{ property.rent }}</td>
               <td class="text-left" v-if="isAuthorized">
                 {{ property.available ? "Available" : "Occupied" }}
@@ -45,7 +51,7 @@
         </v-simple-table>
       </v-tab-item>
     </v-tabs-items>
-</div>
+  </div>
 </template>
 
 <script>
@@ -86,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-  #bg  {
-    background-color: #eeeeee;
-  }
+#bg {
+  background-color: #eeeeee;
+}
 </style>

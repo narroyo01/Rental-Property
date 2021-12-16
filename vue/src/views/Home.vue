@@ -26,13 +26,15 @@
         </div>
       </div>
       <h2 class="text-center mt-12">Featured Available Properties:</h2>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center">
       <property-card
         v-for="property in properties"
         :key="property.id"
         :property="property"
-        style="display: inline-block; vertical-align: top"
-        class="mx-6 my-12"
+        style=" vertical-align: top"
+        class="mx-6 my-6"
       />
+    </div>
     </div>
   </div>
 </template>
