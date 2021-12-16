@@ -4,7 +4,6 @@
       <h3>Contact Us About This Property:</h3>
 
       <v-text-field
-
         label="Name"
         :loading="loading"
         :rules="rulesName"
@@ -50,8 +49,8 @@ export default {
     return {
       loading: false,
       success: false,
-      rulesName:[
-         (value) => !!value || "Required",
+      rulesName: [
+        (value) => !!value || "Required",
         (value) => (value || "").length <= 50 || "Max 50 characters",
       ],
       rulesEmail: [
@@ -66,9 +65,9 @@ export default {
         (value) => !!value || "Required",
         (value) => (value || "").length <= 300 || "Max 300 characters",
       ],
-    
+
       contactForm: {
-        name:"",
+        name: "",
         email: "",
         phone: "",
         message: "",
@@ -87,10 +86,7 @@ export default {
           if (response.status == 201) {
             this.success = true;
             this.loading = false;
-            this.name = "";
-            this.email = "";
-            this.phone = "";
-            this.message = "";
+            this.$refs.form.reset();
           }
         })
         .catch(() => {
