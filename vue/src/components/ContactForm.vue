@@ -4,6 +4,7 @@
       <h3>Contact Us About This Property:</h3>
 
       <v-text-field
+
         label="Name"
         :loading="loading"
         :rules="rulesName"
@@ -86,6 +87,10 @@ export default {
           if (response.status == 201) {
             this.success = true;
             this.loading = false;
+            this.name = "";
+            this.email = "";
+            this.phone = "";
+            this.message = "";
           }
         })
         .catch(() => {
