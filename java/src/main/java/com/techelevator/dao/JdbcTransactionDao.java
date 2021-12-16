@@ -1,20 +1,19 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Ledger;
 import com.techelevator.model.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
-public class JdbcTransactionDao implements  TransactionDao{
+public class JdbcTransactionDao implements TransactionDao{
 
     private JdbcTemplate jdbcTemplate;
 
@@ -55,6 +54,70 @@ public class JdbcTransactionDao implements  TransactionDao{
             allRent.add(transaction);
         }
         return allRent;
+    }
+
+    @Override
+    public Transaction getTransactionById(int id) {
+        String sql = "SELECT transaction_id, time_initiated, time_paid, amount_due, amount_paid, property_id, tenant_id" +
+                " FROM transactions" +
+                " LEFT JOIN users on tenant_id = user_id " +
+                "WHERE tenant_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
+        Transaction transaction = new Transaction();
+        if(rowSet.next()) {
+            transaction = mapTransactionToRowSet(rowSet);
+        }
+        return transaction;
+    }
+
+    @Override
+    public List<Ledger> getLedgersByTenantId(int tenantId) {
+        String sql = "SELECT DISTINCT property_id" +
+                " FROM transactions" +
+                " WHERE tenant_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, tenantId);
+        List<Integer> propertyIds = new ArrayList<>();
+        while(rowSet.next()) {
+            propertyIds.add(rowSet.getInt("property_id"));
+        }
+
+        List<Ledger> ledgers = new ArrayList<>();
+
+        for(int propertyId : propertyIds) {
+            ledgers.add(getLedgerByPropertyIdAndTenantId(propertyId, tenantId));
+        }
+        return ledgers;
+    }
+
+    @Override
+    public Ledger getLedgerByPropertyIdAndTenantId(int propertyId, int tenantId) {
+        String sql = "SELECT transaction_id, time_initiated, time_paid, amount_due, amount_paid, p.property_id, t.tenant_id, address" +
+                " FROM transactions t" +
+                " JOIN property p on p.property_id = t.property_id" +
+                " WHERE p.property_id = ? AND t.tenant_id = ?;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, propertyId, tenantId);
+        Ledger ledger = new Ledger();
+        while (rowSet.next()) {
+            Transaction transaction = mapTransactionToRowSet(rowSet);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            LocalDate timeDue = transaction.getTimeInitiated().toLocalDateTime().toLocalDate();
+            timeDue = timeDue.plusMonths(1);
+            Timestamp newTimeDue = Timestamp.valueOf(timeDue.atStartOfDay());
+            //format date
+            transaction.setTimeDue(formatter.format(newTimeDue));
+            ledger.addTransaction(transaction);
+            ledger.setAddress(rowSet.getString("address"));
+        }
+        return ledger;
+    }
+
+    @Override
+    public void payRentByTransactionId(int transactionId, int amountPaid) {
+        System.out.println(amountPaid);
+        String sql = "UPDATE transactions " +
+                "SET amount_paid = amount_paid + ?, time_paid = CURRENT_DATE " +
+                "WHERE transaction_id = ?";
+        jdbcTemplate.update(sql, amountPaid, transactionId);
     }
 
     private Transaction mapTransactionToRowSet(SqlRowSet rowSet){
