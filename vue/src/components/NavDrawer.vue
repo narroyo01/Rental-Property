@@ -2,6 +2,7 @@
   <v-list dense nav>
     <v-list-item-group color="primary">
       <v-list-item
+        class="item"
         v-for="nav in activeNavs"
         :key="nav.title"
         link
@@ -27,6 +28,11 @@ export default {
         propertyId: "",
       },
       navs: [
+        {
+          title: "Renter Dashboard",
+          icon: "mdi-view-dashboard",
+          to: "/dashboard",
+        },
         { title: "Properties", icon: "mdi-home-group", to: "/property" },
         // {
         //   title: "Request Maintenance",
@@ -57,6 +63,12 @@ export default {
   computed: {
     activeNavs() {
       return this.navs.filter((nav) => {
+        if (
+          nav.title === "Renter Dashboard" &&
+          !this.$store.state.user.username
+        )
+          return false;
+
         if (nav.title === "Login" && this.$store.state.user.username)
           return false;
 
@@ -149,4 +161,8 @@ export default {
 </script>
 
 <style scoped>
+.item {
+  background-color: white;
+  opacity: 90%;
+}
 </style>

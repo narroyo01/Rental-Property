@@ -2,7 +2,7 @@
   <v-app id="app">
     <app-bar @toggleDrawer="drawer = !drawer" />
 
-    <v-navigation-drawer app v-model="drawer" clipped>
+    <v-navigation-drawer app v-model="drawer" clipped src="https://images.nightcafe.studio/jobs/JzRW1podi1MqvXhNhoCt/JzRW1podi1MqvXhNhoCt.jpg?tr=w-1600,c-at_max">
       <nav-drawer />
     </v-navigation-drawer>
 

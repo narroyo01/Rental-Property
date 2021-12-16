@@ -5,7 +5,7 @@
       ref="form"
       @submit.prevent="submit"
     >
-      <h1 id="header">Maintenance Request Form</h1>
+      <h2 id="header">Maintenance Request Form</h2>
       <v-text-field
         :loading="loading"
         :rules="rulesName"

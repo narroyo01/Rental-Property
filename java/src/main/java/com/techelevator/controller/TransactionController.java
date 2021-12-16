@@ -27,7 +27,7 @@ public class TransactionController {
     public ResponseEntity<?> get(@PathVariable int tenantId) {
         return new ResponseEntity<>(transactionDao.getLedgersByTenantId(tenantId), HttpStatus.OK);
     }
-    @PreAuthorize("hasAnyRole")
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/transaction/{transactionId}")
     public ResponseEntity<?> put(@PathVariable int transactionId, @RequestBody PaymentAmount paymentAmount) {
         System.out.println(paymentAmount.getPaymentAmount());
