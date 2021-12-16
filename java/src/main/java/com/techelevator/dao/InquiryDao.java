@@ -5,6 +5,6 @@ import com.techelevator.model.Inquiry;
 
 public interface InquiryDao {
 
-    void createInquiry(Integer id);
+    void createInquiry(Inquiry inquiry);
 
 }

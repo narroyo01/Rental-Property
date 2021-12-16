@@ -57,6 +57,7 @@ export default {
         },
         { title: "Login", icon: "mdi-login", to: "/login" },
         { title: "View Rent", icon: "mdi-currency-usd", to: "/transaction" },
+        { title: "User Administration", icon: "mdi-account-edit", to: "/administration"}
       ],
     };
   },
@@ -88,6 +89,21 @@ export default {
             !(
               this.$store.state.user.authorities[0].name === "ROLE_ADMIN" ||
               this.$store.state.user.authorities[0].name === "ROLE_LANDLORD"
+            )
+          ) {
+            return false;
+          }
+        }
+
+        if (nav.title === "User Administration" && !this.$store.state.user.username) {
+          return false;
+        } else if (
+          nav.title === "User Administration" &&
+          this.$store.state.user.username
+        ) {
+          if (
+            !(
+              this.$store.state.user.authorities[0].name === "ROLE_ADMIN"
             )
           ) {
             return false;
