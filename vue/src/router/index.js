@@ -13,6 +13,7 @@ import UpdateProperty from '../views/UpdateProperty.vue'
 import Property from '../views/Property.vue'
 import ViewAllRent from '../views/ViewAllRent.vue'
 import ViewMyRent from '../views/ViewMyRent.vue'
+import UserAdministration from '../views/UserAdministration.vue'
 
 
 Vue.use(Router)
@@ -122,6 +123,14 @@ const router = new Router({
       path: "/transaction/view",
       name: "my-rent",
       component: ViewMyRent,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/administration",
+      name: "user-administration",
+      component: UserAdministration,
       meta: {
         requiresAuth: true
       }
